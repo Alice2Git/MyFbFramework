@@ -607,8 +607,8 @@ Namespace My.Sys.Forms
 	#endif
 	
 	#ifdef __USE_WASM__
-		Private Function ComboBoxEdit.GetContent() As UString
-			Dim As UString FContent
+		Private Function ComboBoxEdit.GetContent() As UStringX
+			Dim As UStringX FContent
 			For i As Integer = 0 To Items.Count - 1
 				FContent &= "<option value=""" & Str(i) & """>" & Items.Item(i) & "</option>"
 			Next

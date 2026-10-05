@@ -46,7 +46,7 @@ Namespace My.Sys.ComponentModel
 		#ifndef WriteProperty_Off
 			Declare Function WriteProperty(PropertyName As String, Value As Any Ptr) As Boolean
 		#endif
-		DocumentName As UString
+		DocumentName As UStringX
 		Pages As PrintDocumentPages
 		PrinterSettings As Printer
 		Declare Sub Print

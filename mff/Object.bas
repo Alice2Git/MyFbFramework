@@ -51,7 +51,7 @@ Namespace My.Sys
 		Return @This = 0
 	End Function
 	
-	Private Function Object.FullTypeName(ByVal baseIndex As Integer = 0) As UString
+	Private Function Object.FullTypeName(ByVal baseIndex As Integer = 0) As UStringX
 		If IsEmpty Then Return WStr("")
 		Dim As String s
 		Dim As ZString Ptr pz
@@ -266,7 +266,7 @@ End Namespace
 	#endif
 	
 	#ifndef FullTypeName_Off
-		Function FullTypeName Alias "FullTypeName" (Obj As My.Sys.Object Ptr, ByVal baseIndex As Integer = 0) As UString Export
+		Function FullTypeName Alias "FullTypeName" (Obj As My.Sys.Object Ptr, ByVal baseIndex As Integer = 0) As UStringX Export
 			Return Obj->FullTypeName(baseIndex)
 		End Function
 	#endif

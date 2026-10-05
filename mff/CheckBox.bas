@@ -175,7 +175,7 @@ Namespace My.Sys.Forms
 	#endif
 	
 	#ifdef __USE_WASM__
-		Private Function CheckBox.GetContent() As UString
+		Private Function CheckBox.GetContent() As UStringX
 			Return "<input type=""checkbox"" id=""" & Trim(Str(@This)) & "checkbox""/>" & !"\r" & "<label for=""" & Trim(Str(@This)) & "checkbox"" id=""" & Trim(Str(@This)) & "label"">" & FText & "</label>"
 		End Function
 	#endif

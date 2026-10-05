@@ -53,7 +53,7 @@
 	#endif
 #endif
 
-Private Function GetErrorString(ByVal Code As UInteger, ByVal MaxLen  As UShort = 1024, WithCode As Boolean = False) As UString
+Private Function GetErrorString(ByVal Code As UInteger, ByVal MaxLen  As UShort = 1024, WithCode As Boolean = False) As UStringX
 	#ifdef UNICODE
 		Dim ErrorString         As WString Ptr
 	#else

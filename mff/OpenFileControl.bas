@@ -176,7 +176,7 @@ Namespace My.Sys.Forms
 		FFilter    = _Reallocate(FFilter, (Len(Value) + 1) * SizeOf(WString))
 		*FFilter = Value
 		#ifdef __USE_GTK__
-			Dim As UString res()
+			Dim As UStringX res()
 			If *FFilter <> "" Then
 				Split *FFilter, "|", res()
 				ReDim filefilter(UBound(res) + 1)

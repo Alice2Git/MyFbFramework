@@ -1,6 +1,6 @@
 '###############################################################################
 '#  UString_Ex.bas                                                             #
-'#  UString Comprehensive Test Suite — covering all constructors, operators,  #
+'#  UStringX Comprehensive Test Suite — covering all constructors, operators,  #
 '#  methods, properties and performance tests                                  #
 '#  Focus on performance optimization of the &= operator                       #
 '###############################################################################
@@ -51,7 +51,7 @@ End Function
 
 ' ________ OnChange callback test ________
 Dim Shared As Integer g_OnChange_Calls = 0
-Sub OnChange_CB(ByRef Sender As UString)
+Sub OnChange_CB(ByRef Sender As UStringX)
 	g_OnChange_Calls += 1
 End Sub
 
@@ -75,39 +75,39 @@ Print "_______________________________________________"
 
 ' Test 1: Default constructor
 StartTest("Default constructor (empty string)")
-Dim u1 As UString
+Dim u1 As UStringX
 AssertEq("Default constructor Length", u1.Length, 0)
 AssertWs("Default constructor content", *u1.vptr, "")
 
 ' Test 2: WString constructor
 StartTest("WString constructor")
-Dim u2 As UString = "Hello World"
+Dim u2 As UStringX = "Hello World"
 AssertEq("WString constructor Length", u2.Length, 11)
 AssertWs("WString constructor content", *u2.vptr, "Hello World")
 
 ' Test 3: WString literal constructor
 StartTest("WString literal constructor")
-Dim u3 As UString = "TestLiteral"
+Dim u3 As UStringX = "TestLiteral"
 AssertEq("Literal Length", u3.Length, 11)
 AssertWs("Literal content", *u3.vptr, "TestLiteral")
 
 ' Test 4: String constructor (ANSI)
 StartTest("String constructor (ANSI)")
 Dim As String ansi = "ANSI string test"
-Dim u4 As UString = ansi
+Dim u4 As UStringX = ansi
 ' Verify length > 0 (ANSI to Wide)
 AssertOk("String constructor non-empty", u4.Length > 0)
 
 ' Test 5: ZString constructor
 StartTest("ZString constructor")
 Dim As ZString * 100 zs = "ZString test"
-Dim u5 As UString = zs
+Dim u5 As UStringX = zs
 AssertOk("ZString constructor non-empty", u5.Length > 0)
 
-' Test 6: UString copy constructor
+' Test 6: UStringX copy constructor
 StartTest("UString copy constructor")
-Dim u6a As UString = "Original string"
-Dim u6b As UString = u6a
+Dim u6a As UStringX = "Original string"
+Dim u6b As UStringX = u6a
 AssertEq("Copy constructor Length equal", u6b.Length, u6a.Length)
 AssertWs("Copy constructor content matches", *u6b.vptr, *u6a.vptr)
 ' Verify deep copy (modifying original doesn't affect copy)
@@ -122,9 +122,9 @@ Print "_______________________________________________"
 Print "  Part 2: Let assignment operators"
 Print "_______________________________________________"
 
-' Test 7: Let UString
+' Test 7: Let UStringX
 StartTest("Let UString")
-Dim ul1 As UString
+Dim ul1 As UStringX
 ul1 = u2  ' u2 = "Hello World"
 AssertWs("Let UString", *ul1.vptr, "Hello World")
 
@@ -150,7 +150,7 @@ AssertOk("Let ZString non-empty", ul1.Length > 0)
 
 ' Test 12: Self-assignment test
 StartTest("Let self-assignment (lhs = lhs)")
-Dim uself As UString = "Self-assignment test"
+Dim uself As UStringX = "Self-assignment test"
 uself = uself
 AssertWs("Self-assignment content unchanged", *uself.vptr, "Self-assignment test")
 
@@ -164,19 +164,19 @@ Print "_______________________________________________"
 
 ' Test 13: Cast() ByRef As WString
 StartTest("Cast() As WString")
-Dim uc1 As UString = "Conversion test"
+Dim uc1 As UStringX = "Conversion test"
 ' Verify Cast result via *vptr
 AssertWs("vptr content equals Cast result", *uc1.vptr, "Conversion test")
 
 ' Test 14: Cast() As Any Ptr
 StartTest("Cast() As Any Ptr")
-Dim uc2 As UString = "Pointer test"
+Dim uc2 As UStringX = "Pointer test"
 Dim p As Any Ptr = uc2  ' Cast to Any Ptr
 AssertOk("Any Ptr non-null", p <> 0)
 
 ' Test 15: vptr method
 StartTest("vptr method")
-Dim uv1 As UString = "vptr test"
+Dim uv1 As UStringX = "vptr test"
 Dim pw As WString Ptr = uv1.vptr
 AssertWs("*vptr content", *pw, "vptr test")
 
@@ -189,7 +189,7 @@ Print "  Part 4: [] subscript operator"
 Print "_______________________________________________"
 
 StartTest("[] read character")
-Dim uidx As UString = "ABCDEFG"
+Dim uidx As UStringX = "ABCDEFG"
 AssertEq("uidx[0]='A'", uidx[0], Asc("A"))
 AssertEq("uidx[3]='D'", uidx[3], Asc("D"))
 AssertEq("uidx[6]='G'", uidx[6], Asc("G"))
@@ -212,14 +212,14 @@ Print "  Part 5: Length property & Len operator"
 Print "_______________________________________________"
 
 StartTest("Length property")
-Dim ulen1 As UString = "1234567890"
+Dim ulen1 As UStringX = "1234567890"
 AssertEq("Length=10", ulen1.Length, 10)
 
 StartTest("Len operator")
 AssertEq("Len=10", Len(ulen1), 10)
 
 StartTest("Empty string Length")
-Dim uempty As UString
+Dim uempty As UStringX
 AssertEq("Empty Length=0", uempty.Length, 0)
 AssertEq("Empty Len=0", Len(uempty), 0)
 
@@ -231,31 +231,31 @@ Print "_______________________________________________"
 Print "  Part 6: & operator (concatenation)"
 Print "_______________________________________________"
 
-' Test 21: UString & UString
+' Test 21: UStringX & UStringX
 StartTest("UString & UString")
-Dim ua1 As UString = "Hello "
-Dim ua2 As UString = "World"
-Dim ua3 As UString = ua1 & ua2
+Dim ua1 As UStringX = "Hello "
+Dim ua2 As UStringX = "World"
+Dim ua3 As UStringX = ua1 & ua2
 AssertWs("UString&UString", *ua3.vptr, "Hello World")
 
-' Test 22: UString & Const WString
+' Test 22: UStringX & Const WString
 StartTest("UString & Const WString")
-Dim ua4 As UString = "Hello "
-Dim ua5 As UString = ua4 & "FreeBASIC"
+Dim ua4 As UStringX = "Hello "
+Dim ua5 As UStringX = ua4 & "FreeBASIC"
 AssertWs("UString&ConstWStr", *ua5.vptr, "Hello FreeBASIC")
 
-' Test 23: Const WString & UString
+' Test 23: Const WString & UStringX
 StartTest("Const WString & UString")
-Dim ua6 As UString = "World"
-Dim ua7 As UString = "Hello " & ua6
+Dim ua6 As UStringX = "World"
+Dim ua7 As UStringX = "Hello " & ua6
 AssertWs("ConstWStr&UString", *ua7.vptr, "Hello World")
 
 ' Test 24: Chained concatenation
 StartTest("Chained & concatenation")
-Dim ua8 As UString = "A" & "B" & "C"
-' Note: "A"&"B" is native WString concatenation, result then & UString("C")
-Dim uc As UString = "C"
-Dim ua9 As UString = "A" & "B" & uc
+Dim ua8 As UStringX = "A" & "B" & "C"
+' Note: "A"&"B" is native WString concatenation, result then & UStringX("C")
+Dim uc As UStringX = "C"
+Dim ua9 As UStringX = "A" & "B" & uc
 AssertOk("Chained concatenation successful", ua9.Length >= 2)
 
 '______________________--=
@@ -266,35 +266,35 @@ Print "_______________________________________________"
 Print "  Part 7: &= operator (in-place append)"
 Print "_______________________________________________"
 
-' Test 25: &= UString
+' Test 25: &= UStringX
 StartTest("&= UString")
-Dim ub1 As UString = "Hello "
-Dim ub2 As UString = "World"
+Dim ub1 As UStringX = "Hello "
+Dim ub2 As UStringX = "World"
 ub1 &= ub2
 AssertWs("&=UString result", *ub1.vptr, "Hello World")
 
 ' Test 26: &= Const WString
 StartTest("&= Const WString")
-Dim ub3 As UString = "Hello "
+Dim ub3 As UStringX = "Hello "
 ub3 &= "FreeBASIC"
 AssertWs("&=ConstWStr", *ub3.vptr, "Hello FreeBASIC")
 
 ' Test 27: &= WString literal
 StartTest("&= WString literal")
-Dim ub4 As UString = "Start"
+Dim ub4 As UStringX = "Start"
 ub4 &= " dynamic append"
 AssertWs("&=WString", *ub4.vptr, "Start dynamic append")
 
 ' Test 28: &= String (ANSI)
 StartTest("&= String (ANSI)")
-Dim ub5 As UString = "Unicode"
+Dim ub5 As UStringX = "Unicode"
 Dim As String ansi2 = " + ANSI"
 ub5 &= ansi2
 AssertOk("&=ANSI non-empty", ub5.Length > 7)
 
 ' Test 29: &= Const ZString
 StartTest("&= Const ZString")
-Dim ub6 As UString = "Test"
+Dim ub6 As UStringX = "Test"
 Dim As ZString * 50 zs2 = " ZString append"
 ub6 &= zs2
 AssertOk("&=ZString non-empty", ub6.Length > 4)
@@ -302,14 +302,14 @@ AssertOk("&=ZString non-empty", ub6.Length > 4)
 ' Test 30: &= self-append
 StartTest("&= self-append (this &= this)")
 ' Direct self-append may be problematic; use temporary variable
-Dim ub7 As UString = "AB"
-Dim ub7copy As UString = ub7  ' save copy
+Dim ub7 As UStringX = "AB"
+Dim ub7copy As UStringX = ub7  ' save copy
 ub7 &= ub7copy
 AssertWs("Self-append result", *ub7.vptr, "ABAB")
 
 ' Test 31: &= multiple appends (functional test)
 StartTest("&= multiple appends")
-Dim ub8 As UString
+Dim ub8 As UStringX
 ub8 &= "A"
 ub8 &= "B"
 ub8 &= "C"
@@ -319,7 +319,7 @@ AssertWs("5x &= result", *ub8.vptr, "ABCDE")
 
 ' Test 32: &= empty string append
 StartTest("&= empty string append")
-Dim ub9 As UString = "NonEmpty"
+Dim ub9 As UStringX = "NonEmpty"
 Dim ub9len As Integer = ub9.Length
 ub9 &= ""
 AssertEq("Appending empty string leaves Length unchanged", ub9.Length, ub9len)
@@ -335,7 +335,7 @@ Print "__________________________________________"
 
 ' --- Test A: &= single-char append 1000 times ---
 StartTest("[Performance] &= single-char append × 1000")
-Dim uPerf1 As UString
+Dim uPerf1 As UStringX
 Dim As Double t1 = GetTickMs()
 For i As Integer = 1 To 1000
 	uPerf1 &= WChr(65 + (i Mod 26))  ' A-Z loop
@@ -346,7 +346,7 @@ Print "    Time: " & (t2 - t1) & " ms  (&= char-by-char ×1000)"
 
 ' --- Test B: & single-char append 1000 times (baseline) ---
 StartTest("[Performance] & single-char append × 1000 (baseline)")
-Dim uPerf2 As UString
+Dim uPerf2 As UStringX
 Dim As Double t3 = GetTickMs()
 For i As Integer = 1 To 1000
 	uPerf2 = uPerf2 & WChr(65 + (i Mod 26))
@@ -357,7 +357,7 @@ Print "    Time: " & (t4 - t3) & " ms  (& char-by-char ×1000 — old way)"
 
 ' --- Test C: &= 10-char block append 1000 times ---
 StartTest("[Performance] &= 10-char block append × 1000")
-Dim uPerf3 As UString
+Dim uPerf3 As UStringX
 Dim As Double t5 = GetTickMs()
 For i As Integer = 1 To 1000
 	uPerf3 &= "1234567890"
@@ -368,7 +368,7 @@ Print "    Time: " & (t6 - t5) & " ms  (&= 10-char block ×1000)"
 
 ' --- Test D: & 10-char block append 1000 times (baseline) ---
 StartTest("[Performance] & 10-char block append × 1000 (baseline)")
-Dim uPerf4 As UString
+Dim uPerf4 As UStringX
 Dim As Double t7 = GetTickMs()
 For i As Integer = 1 To 1000
 	uPerf4 = uPerf4 & "1234567890"
@@ -379,7 +379,7 @@ Print "    Time: " & (t8 - t7) & " ms  (& 10-char block ×1000 — old way)"
 
 ' --- Test E: large-scale append 10000 times ---
 StartTest("[Performance] &= short string append × 10000")
-Dim uPerf5 As UString
+Dim uPerf5 As UStringX
 Dim As Double t9 = GetTickMs()
 For i As Integer = 1 To 10000
 	uPerf5 &= "AB"
@@ -408,23 +408,23 @@ Print "_______________________________________________"
 Print "  Part 8: += operator"
 Print "_______________________________________________"
 
-' Test 33: += UString
+' Test 33: += UStringX
 StartTest("+= UString")
-Dim ud1 As UString = "Hello "
-Dim ud2 As UString = "World"
+Dim ud1 As UStringX = "Hello "
+Dim ud2 As UStringX = "World"
 ud1 += ud2
 AssertWs("+=UString", *ud1.vptr, "Hello World")
 
 ' Test 34: += Const WString
 StartTest("+= Const WString")
-Dim ud3 As UString = "Value: "
+Dim ud3 As UStringX = "Value: "
 ud3 += "42"
 AssertWs("+=ConstWStr", *ud3.vptr, "Value: 42")
 
 ' Test 35: += self-append
 StartTest("+= self-append")
-Dim ud4 As UString = "XY"
-Dim ud4cpy As UString = ud4
+Dim ud4 As UStringX = "XY"
+Dim ud4cpy As UStringX = ud4
 ud4 += ud4cpy
 AssertWs("Self-append", *ud4.vptr, "XYXY")
 
@@ -436,32 +436,32 @@ Print "_______________________________________________"
 Print "  Part 9: + operator (returns new UString)"
 Print "_______________________________________________"
 
-' Test 36: UString + UString
+' Test 36: UStringX + UStringX
 StartTest("UString + UString")
-Dim ue1 As UString = "AAA"
-Dim ue2 As UString = "BBB"
-Dim ue3 As UString = ue1 + ue2
+Dim ue1 As UStringX = "AAA"
+Dim ue2 As UStringX = "BBB"
+Dim ue3 As UStringX = ue1 + ue2
 AssertWs("UString+UString", *ue3.vptr, "AAABBB")
 ' Verify operands unchanged
 AssertWs("Left operand unchanged", *ue1.vptr, "AAA")
 AssertWs("Right operand unchanged", *ue2.vptr, "BBB")
 
-' Test 37: UString + Const WString
+' Test 37: UStringX + Const WString
 StartTest("UString + Const WString")
-Dim ue4 As UString = "Hello "
-Dim ue5 As UString = ue4 + "World!"
+Dim ue4 As UStringX = "Hello "
+Dim ue5 As UStringX = ue4 + "World!"
 AssertWs("UString+ConstWStr", *ue5.vptr, "Hello World!")
 
-' Test 38: Const WString + UString
+' Test 38: Const WString + UStringX
 StartTest("Const WString + UString")
-Dim ue6 As UString = " World"
-Dim ue7 As UString = "Hello" + ue6
+Dim ue6 As UStringX = " World"
+Dim ue7 As UStringX = "Hello" + ue6
 AssertWs("ConstWStr+UString", *ue7.vptr, "Hello World")
 
 ' Test 39: Chained +
 StartTest("Chained + concatenation")
-Dim ue8 As UString = "A"
-Dim ue9 As UString = ue8 + "B" + "C"
+Dim ue8 As UStringX = "A"
+Dim ue9 As UStringX = ue8 + "B" + "C"
 AssertWs("Chained+", *ue9.vptr, "ABC")
 
 '______________________--=
@@ -474,7 +474,7 @@ Print "_______________________________________________"
 
 ' Test 40: Resize
 StartTest("Resize expand")
-Dim ur1 As UString = "HI"
+Dim ur1 As UStringX = "HI"
 ur1.Resize(10)
 AssertEq("Resize Length=10", ur1.Length, 10)
 
@@ -484,12 +484,12 @@ AssertEq("Resize shrink Length=3", ur1.Length, 3)
 
 ' Test 41: Add method
 StartTest("Add method (append)")
-Dim ur2 As UString = "Start-"
+Dim ur2 As UStringX = "Start-"
 ur2.Add("End")
 AssertWs("Add result", *ur2.vptr, "Start-End")
 
 StartTest("Add method (prepend)")
-Dim ur3 As UString = "World"
+Dim ur3 As UStringX = "World"
 ur3.Add("Hello ", True)
 AssertWs("Add prepend", *ur3.vptr, "Hello World")
 
@@ -508,7 +508,7 @@ Print "_______________________________________________"
 
 ' Test 43: StartsWith
 StartTest("StartsWith")
-Dim usw1 As UString = "FreeBASIC Compiler"
+Dim usw1 As UStringX = "FreeBASIC Compiler"
 AssertOk("StartsWith True", usw1.StartsWith("Free"))
 AssertNot("StartsWith False", usw1.StartsWith("Basic"))
 AssertNot("StartsWith longer than string", usw1.StartsWith("FreeBASIC Compiler Extended"))
@@ -528,45 +528,45 @@ AssertOk("Contains first char", usw1.Contains("F"))
 
 ' Test 46: ToLower
 StartTest("ToLower")
-Dim ulow1 As UString = "Hello WORLD"
-Dim ulow2 As UString = ulow1.ToLower
+Dim ulow1 As UStringX = "Hello WORLD"
+Dim ulow2 As UStringX = ulow1.ToLower
 AssertWs("ToLower", *ulow2.vptr, LCase("Hello WORLD"))
 ' Original unchanged
 AssertWs("ToLower original unchanged", *ulow1.vptr, "Hello WORLD")
 
 ' Test 47: ToUpper
 StartTest("ToUpper")
-Dim uup1 As UString = "Hello WORLD"
-Dim uup2 As UString = uup1.ToUpper
+Dim uup1 As UStringX = "Hello WORLD"
+Dim uup2 As UStringX = uup1.ToUpper
 AssertWs("ToUpper", *uup2.vptr, UCase("Hello WORLD"))
 
 ' Test 48: TrimAll
 StartTest("TrimAll")
-Dim ut1 As UString = "   Hello World   "
-Dim ut2 As UString = ut1.TrimAll
+Dim ut1 As UStringX = "   Hello World   "
+Dim ut2 As UStringX = ut1.TrimAll
 AssertWs("TrimAll", *ut2.vptr, "Hello World")
 
 ' Test 49: TrimEnd
 StartTest("TrimEnd")
-Dim ute1 As UString = "Hello World   "
-Dim ute2 As UString = ute1.TrimEnd
+Dim ute1 As UStringX = "Hello World   "
+Dim ute2 As UStringX = ute1.TrimEnd
 AssertWs("TrimEnd", *ute2.vptr, "Hello World")
 
 ' Test 50: TrimStart
 StartTest("TrimStart")
-Dim uts1 As UString = "   Hello World"
-Dim uts2 As UString = uts1.TrimStart
+Dim uts1 As UStringX = "   Hello World"
+Dim uts2 As UStringX = uts1.TrimStart
 AssertWs("TrimStart", *uts2.vptr, "Hello World")
 
 ' Test 51: SubString (extract)
 StartTest("SubString extract")
-Dim uss1 As UString = "FreeBASIC"
-Dim uss2 As UString = uss1.SubString(5, 5)
+Dim uss1 As UStringX = "FreeBASIC"
+Dim uss2 As UStringX = uss1.SubString(5, 5)
 AssertWs("SubStr(5,5)", *uss2.vptr, "BASIC")
 
 StartTest("SubString replace")
-Dim uss3 As UString = "Hello World"
-Dim uss4 As UString = uss3.SubString(7, 5, "FreeBASIC")
+Dim uss3 As UStringX = "Hello World"
+Dim uss4 As UStringX = uss3.SubString(7, 5, "FreeBASIC")
 AssertWs("SubStr replace", *uss4.vptr, "Hello FreeBASIC")
 
 StartTest("SubString modifies original")
@@ -583,17 +583,17 @@ Print "_______________________________________________"
 
 ' Test 52: Val
 StartTest("Val numeric conversion")
-Dim uval1 As UString = "123.456"
+Dim uval1 As UStringX = "123.456"
 Dim d As Double = Val(uval1)
 AssertOk("Val result ≈123.456", Abs(d - 123.456) < 0.001)
 
 StartTest("Val integer")
-Dim uval2 As UString = "42"
+Dim uval2 As UStringX = "42"
 AssertEqL("Val integer=42", CLng(Val(uval2)), 42)
 
 ' Test 53: WStrPtr
 StartTest("WStrPtr")
-Dim uwp As UString = "Pointer get"
+Dim uwp As UStringX = "Pointer get"
 Dim pwp As WString Ptr = WStrPtr(uwp)
 AssertWs("WStrPtr content", *pwp, "Pointer get")
 
@@ -607,22 +607,22 @@ Print "_______________________________________________"
 
 ' Test 54: Left
 StartTest("Left function")
-Dim ulf1 As UString = "FreeBASIC"
-Dim ulf2 As UString = Left(ulf1, 4)
+Dim ulf1 As UStringX = "FreeBASIC"
+Dim ulf2 As UStringX = Left(ulf1, 4)
 AssertWs("Left(4)", *ulf2.vptr, "Free")
 
 StartTest("Left beyond length")
-Dim ulf3 As UString = Left(ulf1, 100)
+Dim ulf3 As UStringX = Left(ulf1, 100)
 AssertWs("Left(100) truncates", *ulf3.vptr, "FreeBASIC")
 
 StartTest("Left negative")
-Dim ulf4 As UString = Left(ulf1, 0)
+Dim ulf4 As UStringX = Left(ulf1, 0)
 AssertEq("Left(0) empty", ulf4.Length, 0)
 
 ' Test 55: Right
 StartTest("Right function")
-Dim urg1 As UString = "FreeBASIC"
-Dim urg2 As UString = Right(urg1, 5)
+Dim urg1 As UStringX = "FreeBASIC"
+Dim urg2 As UStringX = Right(urg1, 5)
 AssertWs("Right(5)", *urg2.vptr, "BASIC")
 
 '______________________--=
@@ -634,7 +634,7 @@ Print "  Part 14: OnChange callback event"
 Print "_______________________________________________"
 
 StartTest("OnChange callback (Let triggers)")
-Dim uevt1 As UString = "before"
+Dim uevt1 As UStringX = "before"
 uevt1.OnChange = @OnChange_CB
 ResetOnChange()
 uevt1 = "after"
@@ -646,7 +646,7 @@ uevt1 &= " append"
 AssertEq("&= triggers OnChange", g_OnChange_Calls, 0) ' &= currently does not trigger OnChange internally
 
 StartTest("OnChange callback (SubString modification triggers)")
-Dim uevt2 As UString = "Hello World"
+Dim uevt2 As UStringX = "Hello World"
 uevt2.OnChange = @OnChange_CB
 ResetOnChange()
 uevt2.SubString(7, 5, "Mars")
@@ -662,14 +662,14 @@ Print "_______________________________________________"
 
 ' Test 58: Empty string operations
 StartTest("Empty string StartsWith/EndsWith/Contains")
-Dim uempty2 As UString
+Dim uempty2 As UStringX
 AssertNot("Empty StartsWith", uempty2.StartsWith("A"))
 AssertNot("Empty EndsWith", uempty2.EndsWith("A"))
 AssertNot("Empty Contains", uempty2.Contains("A"))
 
 ' Test 59: Empty string &= multiple
 StartTest("Empty string &= multiple")
-Dim uepty As UString
+Dim uepty As UStringX
 uepty &= "A"
 uepty &= "B"
 uepty &= "C"
@@ -677,7 +677,7 @@ AssertWs("Empty append ABC", *uepty.vptr, "ABC")
 
 ' Test 60: Large string test
 StartTest("Large string construction and append (1000KB)")
-Dim ubig As UString
+Dim ubig As UStringX
 For i As Integer = 1 To 10000
 	ubig &= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()"
 Next
@@ -686,17 +686,17 @@ Print "    Large string length: " & ubig.Length
 
 ' Test 61: Special characters test
 StartTest("Special characters test")
-Dim ucn As UString = "Line1" + Chr(10) + "Line2"
+Dim ucn As UStringX = "Line1" + Chr(10) + "Line2"
 AssertOk("Special chars Length>0", ucn.Length > 0)
 
 StartTest("Unicode append")
-Dim ucn2 As UString = "Hello"
+Dim ucn2 As UStringX = "Hello"
 ucn2 &= " World!"
 AssertWs("After append", *ucn2.vptr, "Hello World!")
 
 ' Test 62: Mixed type operations
 StartTest("Mixed type operation chain")
-Dim umix As UString = "UString"
+Dim umix As UStringX = "UString"
 umix &= " + WString"
 Dim As String ansi3 = " + ANSI"
 umix &= ansi3
@@ -705,14 +705,14 @@ AssertOk("Mixed operations completed", umix.Length > 20)
 
 ' Test 63: Append after reassignment
 StartTest("Append after reassignment")
-Dim ure As UString = "Orig"
+Dim ure As UStringX = "Orig"
 ure = "NewVal"
 ure &= "Append"
 AssertWs("Append after reassignment", *ure.vptr, "NewValAppend")
 
 ' Test 64: Alternating Let and &=
 StartTest("Alternating Let/&= operations")
-Dim ualt As UString
+Dim ualt As UStringX
 ualt = "First"
 ualt &= "-Second"
 ualt = "Reset"
@@ -728,11 +728,11 @@ Print "  Part 16: Pointer equivalence validation"
 Print "_______________________________________________"
 
 StartTest("vptr equals WStrPtr")
-Dim uptr1 As UString = "Pointer equivalence test"
+Dim uptr1 As UStringX = "Pointer equivalence test"
 AssertOk("vptr=WStrPtr", uptr1.vptr = WStrPtr(uptr1))
 
 StartTest("*vptr dereference validation")
-Dim uptr2 As UString = "Dereference test"
+Dim uptr2 As UStringX = "Dereference test"
 AssertWs("*vptr content", *uptr2.vptr, "Dereference test")
 
 '______________________--=

@@ -232,7 +232,7 @@ Private Function OpenFileDialog.Execute As Boolean
 		ToUtf8("Cancel"), GTK_RESPONSE_CANCEL, _
 		ToUtf8("Open"), GTK_RESPONSE_ACCEPT, _
 		NULL)
-		Dim As UString res()
+		Dim As UStringX res()
 		If *FFilter <> "" Then
 			Split *FFilter, "|", res()
 			ReDim filefilter(UBound(res) + 1)
@@ -517,7 +517,7 @@ Private Function SaveFileDialog.Execute As Boolean
 		ToUtf8("Cancel"), GTK_RESPONSE_CANCEL, _
 		ToUtf8("Save"), GTK_RESPONSE_ACCEPT, _
 		NULL)
-		Dim As UString res()
+		Dim As UStringX res()
 		If *FFilter <> "" Then
 			Split *FFilter, "|", res()
 			ReDim filefilter(UBound(res) + 1)
@@ -607,7 +607,7 @@ Private Function SaveFileDialog.Execute As Boolean
 		If GetSaveFileName(@ofn) Then
 			If ofn.nFileExtension = 0 Then
 				FilterIndex = ofn.nFilterIndex
-				Dim As UString res()
+				Dim As UStringX res()
 				Split(*FFilter, "|", res())
 				Var Index = FilterIndex * 2 - 1
 				If res(Index) = "*.*" Then
@@ -1041,7 +1041,7 @@ Private Function ColorDialog.Execute As Boolean
 		Dim As Integer res = gtk_dialog_run (GTK_DIALOG (widget))
 		bResult = res = GTK_RESPONSE_OK
 		If bResult Then
-			Dim As UString RGBString
+			Dim As UStringX RGBString
 			#ifdef __USE_GTK3__
 				Dim As GdkRGBA RGBAColor
 				gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER (widget), @RGBAColor)
@@ -1052,7 +1052,7 @@ Private Function ColorDialog.Execute As Boolean
 				gtk_color_selection_get_current_color(GTK_COLOR_SELECTION (cs), @gColor)
 				RGBString = WStr(*gdk_color_to_string(@gColor))
 			#endif
-			Dim As UString res()
+			Dim As UStringX res()
 			Split(Mid(RGBString, 5, Len(RGBString) - 5), ",", res())
 			If UBound(res) >= 2 Then This.Color = BGR(Val(res(0)), Val(res(1)), Val(res(2)))
 		End If

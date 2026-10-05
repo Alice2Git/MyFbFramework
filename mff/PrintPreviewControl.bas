@@ -484,7 +484,7 @@ Namespace My.Sys.Forms
 		DefaultDocument.Name = "DefaultDocument"
 		Document = @DefaultDocument
 		FOrientation = PrinterOrientation.poPortait
-		'Dim As UString DefaultPrinter = Document.PrinterSettings.GetDefaultPrinterDriver
+		'Dim As UStringX DefaultPrinter = Document.PrinterSettings.GetDefaultPrinterDriver
 		'If DefaultPrinter > "" Then
 		'	This.PrinterName = DefaultPrinter
 		'	' Set the default values for the printer

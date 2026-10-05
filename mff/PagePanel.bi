@@ -25,7 +25,7 @@ Namespace My.Sys.Forms
 		Declare Static Sub GraphicChange(ByRef Designer As My.Sys.Object, ByRef Sender As My.Sys.Drawing.GraphicType, Image As Any Ptr, ImageType As Integer)
 	Protected:
 		#ifdef __USE_WASM__
-			Declare Virtual Function GetContent() As UString
+			Declare Virtual Function GetContent() As UStringX
 		#elseif defined(__USE_GTK__) AndAlso defined(__USE_GTK3__)
 			Declare Static Function Overlay_get_child_position(self As GtkOverlay Ptr, widget As GtkWidget Ptr, allocation As GdkRectangle Ptr, user_data As Any Ptr) As Boolean
 		#endif

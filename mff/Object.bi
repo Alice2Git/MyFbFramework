@@ -56,7 +56,7 @@ Namespace My.Sys
 		' ('baseIndex =  0' to get the typename of the instance)
 		' ('baseIndex = -1' to get the base.typename of the instance, or "" if not existing)
 		' ('baseIndex = -2' to get the base.base.typename of the instance, or "" if not existing)
-		Declare Function FullTypeName(ByVal baseIndex As Integer = 0) As UString
+		Declare Function FullTypeName(ByVal baseIndex As Integer = 0) As UStringX
 		'Returns a Boolean value indicating whether a object has been initialized (Windows, Linux, Android, Web).
 		Declare Function IsEmpty() As Boolean
 		Declare Operator Cast As Any Ptr

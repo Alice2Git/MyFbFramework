@@ -99,7 +99,7 @@ Namespace My.Sys.Forms
 		#endif
 	End Sub
 	
-	Private Sub DataObject.GetFileDropList(filePaths() As UString)
+	Private Sub DataObject.GetFileDropList(filePaths() As UStringX)
 		#ifdef __USE_WINAPI__
 			If pDataObject = 0 Then pDataObject = Cast(IDataObject Ptr, _New(CDataObject))
 			Dim As FORMATETC fmtetc = (DataFormats.dfHDrop, 0, DVASPECT_CONTENT, -1, TYMED_HGLOBAL)
@@ -124,7 +124,7 @@ Namespace My.Sys.Forms
 		#endif
 	End Sub
 	
-	Private Sub DataObject.SetFileDropList(filePaths() As UString)
+	Private Sub DataObject.SetFileDropList(filePaths() As UStringX)
 		#ifdef __USE_WINAPI__
 			Dim total As Integer = 0
 			For i As Integer = LBound(filePaths) To UBound(filePaths)

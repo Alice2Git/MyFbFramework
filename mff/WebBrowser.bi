@@ -103,13 +103,13 @@ Namespace My.Sys.Forms
 		'Reloads the current document
 		Declare Sub Refresh()
 		'Returns the current URL of the displayed document
-		Declare Function GetURL() As UString
+		Declare Function GetURL() As UStringX
 		'Returns the current navigation state (e.g., Loading, Complete)
 		Declare Function State() As Integer
 		'Stops loading the current page
 		Declare Sub Stop()
 		'Retrieves the HTML content of the document's <body> element
-		Declare Function GetBody(ByVal flag As Long = 0) As UString
+		Declare Function GetBody(ByVal flag As Long = 0) As UStringX
 		'Updates the HTML content of the document's <body> element
 		Declare Sub SetBody(ByRef tText As WString, ByVal flag As Long = 0)
 		Declare Operator Cast As My.Sys.Forms.Control Ptr

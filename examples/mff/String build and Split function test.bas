@@ -1,14 +1,14 @@
 ﻿#include "mff/NoInterface.bi"
 'SetConsoleOutputCP(65001)
 'SetConsoleOutputCP(936)
-Dim ArrUString() As UString
+Dim ArrUString() As UStringX
 Dim ArrString() As String
 Dim ArrWStringPtr() As WString Ptr
 Dim nLen As Integer
 
 Dim As Long i, n = 2000
 Dim As String  TestString
-Dim As UString TestUString
+Dim As UStringX TestUString
 Dim As WString * 400960 TestWString
 
 Dim As ULong t

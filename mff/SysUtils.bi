@@ -225,7 +225,7 @@ Using ClassContainer
 
 Declare Function ErrDescription(Code As Integer) ByRef As WString
 
-Declare Function GetErrorString(ByVal Code As UInteger, ByVal MaxLen  As UShort = 1024, WithCode As Boolean = False) As UString
+Declare Function GetErrorString(ByVal Code As UInteger, ByVal MaxLen  As UShort = 1024, WithCode As Boolean = False) As UStringX
 
 #ifndef __USE_MAKE__
 	#include once "SysUtils.bas"

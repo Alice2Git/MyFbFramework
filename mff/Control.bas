@@ -1024,7 +1024,7 @@ Namespace My.Sys.Forms
 				'SendMessageW(FHandle, WM_THEMECHANGED, 0, 0)
 			End Sub
 		#elseif defined(__USE_WASM__)
-			Private Virtual Function Control.GetContent() As UString
+			Private Virtual Function Control.GetContent() As UStringX
 				Return FText
 			End Function
 		#endif

@@ -88,7 +88,7 @@ Namespace My.Sys.Forms
 		If Value = "" Then
 			This.Clear
 		Else
-			Dim res(Any) As UString, Addresses(3) As Integer
+			Dim res(Any) As UStringX, Addresses(3) As Integer
 			Split(Value, ".", res())
 			For i As Integer = 0 To 3
 				If UBound(res) >= i Then

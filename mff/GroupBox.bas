@@ -101,7 +101,7 @@ Namespace My.Sys.Forms
 	#endif
 	
 	#ifdef __USE_WASM__
-		Private Function GroupBox.GetContent() As UString
+		Private Function GroupBox.GetContent() As UStringX
 			Return "<legend id=""" & Trim(Str(@This)) & "legend"">" & FText & "</legend>"
 		End Function
 	#endif

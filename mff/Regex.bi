@@ -2,9 +2,9 @@
 '' Regex.bi
 '' Regular expressions support for MyFbFramework
 ''
-'' Unicode-only API: works with WString / UString. There is no ANSI "String"
-'' overload -- pass string literals or UString variables, both bind fine
-'' because UString.Cast() returns the underlying buffer ByRef WString.
+'' Unicode-only API: works with WString / UStringX. There is no ANSI "String"
+'' overload -- pass string literals or UStringX variables, both bind fine
+'' because UStringX.Cast() returns the underlying buffer ByRef WString.
 ''
 '' Backend selection (compile-time, no runtime dependency surprises):
 ''
@@ -59,14 +59,14 @@ Namespace My.Sys.Text
 	'' Groups(0) (the whole match); VBScript.RegExp does not expose offsets
 	'' for individual capture groups, so Groups(i > 0).Index/.Length are -1.
 	Type RegexGroup
-		Value As UString
+		Value As UStringX
 		Index As Integer   '' 0-based char offset into the subject WString, -1 if not tracked/captured
 		Length As Integer  '' char length of the captured text, -1 if not tracked/captured
 	End Type
 
 	'' A single match result (Groups(0) is always the whole match)
 	Type RegexMatch
-		Value As UString
+		Value As UStringX
 		Index As Integer
 		Length As Integer
 		Success As Boolean
@@ -91,29 +91,29 @@ Namespace My.Sys.Text
 			Declare Function Matches(ByRef Text As Const WString) As RegexMatch Ptr
 			Declare Function MatchCount() As Integer '' number of matches found by the last Matches() call
 
-			Declare Function Replace(ByRef Text As Const WString, ByRef Replacement As Const WString) As UString
-			Declare Function ReplaceFirst(ByRef Text As Const WString, ByRef Replacement As Const WString) As UString
+			Declare Function Replace(ByRef Text As Const WString, ByRef Replacement As Const WString) As UStringX
+			Declare Function ReplaceFirst(ByRef Text As Const WString, ByRef Replacement As Const WString) As UStringX
 
-			Declare Function Split(ByRef Text As Const WString) As UString Ptr
+			Declare Function Split(ByRef Text As Const WString) As UStringX Ptr
 			Declare Function SplitCount() As Integer '' number of parts returned by the last Split() call
 
 			Declare Function IsValid() As Boolean
-			Declare Function LastError() As UString
+			Declare Function LastError() As UStringX
 
-			Declare Property Pattern() As UString
+			Declare Property Pattern() As UStringX
 			Declare Property Pattern(ByRef Value As Const WString)
 
 		Private:
-			_Pattern As UString
+			_Pattern As UStringX
 			_Options As RegexOptions
 			_Compiled As Any Ptr    '' backend-specific handle:
 			                        ''   PCRE2   -> pcre2_code_8 Ptr
 			                        ''   Windows -> IDispatch Ptr (VBScript.RegExp instance)
 			                        ''   GRegex  -> GRegex Ptr
 			_Valid As Boolean
-			_LastError As UString
+			_LastError As UStringX
 			_LastMatches(Any) As RegexMatch
-			_LastSplit(Any) As UString
+			_LastSplit(Any) As UStringX
 
 			Declare Sub Compile()
 			Declare Sub FreeCompiled()

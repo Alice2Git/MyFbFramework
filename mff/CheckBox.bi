@@ -31,7 +31,7 @@ Namespace My.Sys.Forms
 	Protected:
 		Declare Virtual Sub ProcessMessage(ByRef Message As Message)
 		#ifdef __USE_WASM__
-			Declare Virtual Function GetContent() As UString
+			Declare Virtual Function GetContent() As UStringX
 		#endif
 	Public:
 		#ifndef ReadProperty_Off

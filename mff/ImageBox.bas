@@ -198,7 +198,7 @@ Namespace My.Sys.Forms
 	#endif
 	
 	#ifdef __USE_WASM__
-		Private Function ImageBox.GetContent() As UString
+		Private Function ImageBox.GetContent() As UStringX
 			Return ""
 		End Function
 	#endif

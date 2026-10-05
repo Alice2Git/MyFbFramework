@@ -65,7 +65,7 @@ Namespace My.Sys.Forms
 			DropDownWidget As GtkWidget Ptr
 			DropDownListWidget As GtkWidget Ptr
 		#elseif defined(__USE_WASM__)
-			Declare Virtual Function GetContent() As UString
+			Declare Virtual Function GetContent() As UStringX
 		#endif
 		Declare Virtual Sub ProcessMessage(ByRef Message As Message)
 	Public:

@@ -102,7 +102,7 @@ Namespace My.Sys.Forms
 	#endif
 	
 	#ifdef __USE_WASM__
-		Private Function PagePanel.GetContent() As UString
+		Private Function PagePanel.GetContent() As UStringX
 			Return ""
 		End Function
 	#elseif defined(__USE_GTK__) AndAlso defined(__USE_GTK3__)

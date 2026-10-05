@@ -4245,7 +4245,7 @@ Namespace My.Sys.Forms
 			End If
 		Case CS_Area
 			Dim i As Long, j As Long
-			Dim sDisplay As UString
+			Dim sDisplay As UStringX
 			Dim bBold As Boolean
 			Dim RectF_ As RectF
 			Dim LW As Single
@@ -4556,7 +4556,7 @@ Namespace My.Sys.Forms
 		
 	End Function
 	
-	Private Function Chart.FormatLabel(ByVal numerical_expression As Double, ByRef formatting_expression As WString = "") As UString
+	Private Function Chart.FormatLabel(ByVal numerical_expression As Double, ByRef formatting_expression As WString = "") As UStringX
 		If formatting_expression = "" Then
 			Return WStr(numerical_expression)
 		Else

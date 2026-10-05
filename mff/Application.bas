@@ -118,7 +118,7 @@ Namespace My
 		Dim As Integer Fn = FreeFile, Result
 		Dim As WString * 2048 Buff, tKey
 		Dim As Boolean StartGeneral = False
-		Dim As UString LanguageFile = *FCurLanguagePath & Value & ".lng"
+		Dim As UStringX LanguageFile = *FCurLanguagePath & Value & ".lng"
 		Result = Open(LanguageFile For Input Encoding "utf-8" As #Fn)
 		If Result <> 0 Then Result = Open(LanguageFile For Input Encoding "utf-16" As #Fn)
 		If Result <> 0 Then Result = Open(LanguageFile For Input Encoding "utf-32" As #Fn)
@@ -849,7 +849,7 @@ Namespace Debug
 			_Deallocate(tMsgPtr)
 		End Sub
 		
-		Private Sub Print Overload(ByRef Msg As UString, bWriteLog As Boolean = False, bPrintMsg As Boolean = False, bShowMsg As Boolean = False, bPrintToDebugWindow As Boolean = True)
+		Private Sub Print Overload(ByRef Msg As UStringX, bWriteLog As Boolean = False, bPrintMsg As Boolean = False, bShowMsg As Boolean = False, bPrintToDebugWindow As Boolean = True)
 			If bWriteLog Then
 				Dim As Integer Result, Fn = FreeFile_
 				Result = Open(ExePath & "/DebugInfo.log" For Append Encoding "utf-8" As #Fn) 
@@ -1133,7 +1133,7 @@ End Type
 	End Function
 #endif
 
-Function InputBox(ByRef sCaption As WString  = "" , ByRef sMessageText As WString = "Enter text:" , ByRef sDefaultText As WString = "" , iFlag As Long = 0 , iFlag2 As Long = 0, hParentWin As Any Ptr = 0) As UString __EXPORT__
+Function InputBox(ByRef sCaption As WString  = "" , ByRef sMessageText As WString = "Enter text:" , ByRef sDefaultText As WString = "" , iFlag As Long = 0 , iFlag2 As Long = 0, hParentWin As Any Ptr = 0) As UStringX __EXPORT__
 	#ifdef __USE_WINAPI__
 		Dim As HWND hwFocus = GetFocus()
 		Dim InputBox_ As TInputBox
@@ -1162,7 +1162,7 @@ Function InputBox(ByRef sCaption As WString  = "" , ByRef sMessageText As WStrin
 				Dim As Integer iMsg = InputBox_.msg.message
 				If (iMsg = WM_LBUTTONDOWN) OrElse (iMsg = WM_KEYUP AndAlso (InputBox_.msg.wParam = 32 OrElse InputBox_.msg.wParam = 13)) Then
 					SendMessage(InputBox_.hwnd1,WM_GETTEXT,1024,Cast(LPARAM ,@InputBox_.mess))
-					Dim As UString sRet = InputBox_.mess
+					Dim As UStringX sRet = InputBox_.mess
 					Function = sRet
 					DestroyWindow(InputBox_.hWnd)
 					InputBox_.flag=0

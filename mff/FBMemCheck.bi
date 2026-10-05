@@ -256,7 +256,7 @@
 				fbmld_tree_clean( @((*node)->Left) )
 				fbmld_tree_clean( @((*node)->Right) )
 				If FuncName_ = "" OrElse FuncName_ = (*node)->funcname Then
-					'fbmld_print( "error: " & (*node)->bytes & " bytes allocated/created at " & (*node)->file & "(" & (*node)->funcname & "): " & (*node)->linenum & " [&H" & Hex( (*node)->pt, 8 ) & "][" & (*node)->pt & "] not deallocated/deleted" & IIf((*node)->funcname = "WREALLOCATE" OrElse (*node)->funcname = "WLET" OrElse (*node)->funcname = "USTRING.constructor" OrElse (*node)->funcname = "USTRING.operator.let" OrElse (*node)->funcname = "WSTRINGLIST.ADD" OrElse (*node)->funcname = "WSTRINGLIST.INSERT" OrElse (*node)->funcname = "USTRING.RESIZE", ". Value: """ & *Cast(WString Ptr, (*node)->pt) & """", ""))
+					'fbmld_print( "error: " & (*node)->bytes & " bytes allocated/created at " & (*node)->file & "(" & (*node)->funcname & "): " & (*node)->linenum & " [&H" & Hex( (*node)->pt, 8 ) & "][" & (*node)->pt & "] not deallocated/deleted" & IIf((*node)->funcname = "WREALLOCATE" OrElse (*node)->funcname = "WLET" OrElse (*node)->funcname = "USTRINGX.constructor" OrElse (*node)->funcname = "USTRINGX.operator.let" OrElse (*node)->funcname = "WSTRINGLIST.ADD" OrElse (*node)->funcname = "WSTRINGLIST.INSERT" OrElse (*node)->funcname = "USTRINGX.RESIZE", ". Value: """ & *Cast(WString Ptr, (*node)->pt) & """", ""))
 					fbmld_print( "error: " & (*node)->bytes & " bytes allocated/created at " & (*node)->file & "(" & (*node)->funcname & "): " & (*node)->linenum & " [&H" & Hex( (*node)->pt, 8 ) & "][" & (*node)->pt & "] not deallocated/deleted" & ". Value: """ & *Cast(WString Ptr, (*node)->pt) & """")
 				End If
 				bytesCount += (*node)->bytes

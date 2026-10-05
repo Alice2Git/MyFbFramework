@@ -793,9 +793,9 @@ Namespace My.Sys.Forms
 	#endif
 	
 	#ifdef __USE_WASM__
-		Private Function TreeView.CreateNodes(PNode As TreeNode Ptr) As UString
+		Private Function TreeView.CreateNodes(PNode As TreeNode Ptr) As UStringX
 			If PNode->Nodes.Count = 0 Then Return ""
-			Dim As UString FContent
+			Dim As UStringX FContent
 			FContent = "<ul style=""display: none;"">"
 			For i As Integer = 0 To PNode->Nodes.Count - 1
 				FContent &= "<li style=""list-style-type: none;"">" & !"\r\n"
@@ -807,8 +807,8 @@ Namespace My.Sys.Forms
 			Return FContent
 		End Function
 		
-		Private Function TreeView.GetContent() As UString
-			Dim As UString FContent
+		Private Function TreeView.GetContent() As UStringX
+			Dim As UStringX FContent
 			For i As Integer = 0 To Nodes.Count - 1
 				FContent &= "<li>" & !"\r\n"
 				FContent &= "<span style=""cursor: pointer; display: inline-block; width: 16px"" onclick=""toggleNode(event)"">" & IIf(Nodes.Item(i)->Nodes.Count = 0, " ", "►") & "</span>" & !"\r\n"
@@ -990,7 +990,7 @@ Namespace My.Sys.Forms
 				'                If Perform(TB_GETBUTTON,Index,CInt(@TB)) Then
 				'                   If Buttons.Button(Index)->ShowHint Then
 				'                      If Buttons.Button(Index)->Hint <> "" Then
-				'                          'Dim As UString s
+				'                          'Dim As UStringX s
 				'                          's = Buttons.Button(Index).Hint
 				'                          TTX->lpszText = @(Buttons.Button(Index)->Hint)
 				'                      End If

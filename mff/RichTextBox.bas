@@ -1236,7 +1236,7 @@ Namespace My.Sys.Forms
 		End Function
 		
 		Private Function RichTextBox.GetTextCallback(dwCookie As DWORD_PTR, pbBuff As Byte Ptr, cb As Long, pcb As Long Ptr) As DWORD
-			Dim ptxt As UString Ptr = Cast(UString Ptr, dwCookie)
+			Dim ptxt As UStringX Ptr = Cast(UStringX Ptr, dwCookie)
 			If ptxt Then
 				ptxt->AppendBuffer(pbBuff, cb)
 				*pcb = cb

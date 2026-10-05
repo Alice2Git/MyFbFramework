@@ -186,7 +186,7 @@ Namespace My.Sys.Forms
 	#endif
 	
 	#ifdef __USE_WASM__
-		Private Function RadioButton.GetContent() As UString
+		Private Function RadioButton.GetContent() As UStringX
 			Return "<input type=""radio"" id=""" & Trim(Str(@This)) & "radio"" name=""" & IIf(FParent, FParent->Name, "") & """ value=""" & *FName & """/>" & !"\r" & "<label for=""" & Trim(Str(@This)) & "radio"" id=""" & Trim(Str(@This)) & "label"">" & FText & "</label>"
 		End Function
 	#endif

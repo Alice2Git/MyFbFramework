@@ -315,9 +315,9 @@ Namespace My.Sys.Forms
 			#endif
 			Declare Function GetDataPresent(DataType As DataFormats) As Boolean
 			Declare Function GetData(DataType As DataFormats) As Any Ptr
-			Declare Sub GetFileDropList(filePaths() As UString)
+			Declare Sub GetFileDropList(filePaths() As UStringX)
 			Declare Sub SetData(DataType As DataFormats, pData As Any Ptr, Bytes As Integer = 0)
-			Declare Sub SetFileDropList(filePaths() As UString)
+			Declare Sub SetFileDropList(filePaths() As UStringX)
 		End Type
 		
 		Private Enum StretchMode
@@ -470,7 +470,7 @@ Namespace My.Sys.Forms
 				FType As String
 				FElementStyle As String
 				FClass As String
-				Declare Virtual Function GetContent() As UString
+				Declare Virtual Function GetContent() As UStringX
 			#elseif defined(__USE_WINAPI__)
 				FParentHandle As HWND
 				FClient As HWND

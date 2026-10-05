@@ -6,7 +6,7 @@
 	#define GrowLength 1
 #endif
 
-Private Constructor UString()
+Private Constructor UStringX()
 	m_Length = 0
 	m_BytesCount = SizeOf(WString) * GrowLength
 	m_Data = _Allocate(SizeOf(WString))
@@ -19,7 +19,7 @@ Private Constructor UString()
 	End If
 End Constructor
 
-Private Constructor UString(ByRef Value As WString)
+Private Constructor UStringX(ByRef Value As WString)
 	m_Length = Len(Value)
 	m_BytesCount = (m_Length + 1) * SizeOf(WString) * GrowLength
 	m_Data = _Allocate(m_BytesCount)
@@ -32,7 +32,7 @@ Private Constructor UString(ByRef Value As WString)
 	End If
 End Constructor
 
-Private Constructor UString(ByRef Value As Const WString)
+Private Constructor UStringX(ByRef Value As Const WString)
 	m_Length = Len(Value)
 	m_BytesCount = (m_Length + 1) * SizeOf(WString) * GrowLength
 	m_Data = _Allocate(m_BytesCount)
@@ -46,7 +46,7 @@ Private Constructor UString(ByRef Value As Const WString)
 End Constructor
 
 'NO Any use?
-Private Constructor UString(ByRef Value As String)
+Private Constructor UStringX(ByRef Value As String)
 	m_Length = Len(Value)
 	m_BytesCount = (m_Length + 1) * SizeOf(WString) * GrowLength
 	m_BufferLen = m_Length * 2
@@ -62,7 +62,7 @@ Private Constructor UString(ByRef Value As String)
 	m_BufferLen = m_Length * 2
 End Constructor
 
-Private Constructor UString(ByRef Value As ZString)
+Private Constructor UStringX(ByRef Value As ZString)
 	m_Length = Len(Value)
 	m_BytesCount = (m_Length + 1) * SizeOf(WString) * GrowLength
 	m_BufferLen = m_Length * 2
@@ -78,7 +78,7 @@ Private Constructor UString(ByRef Value As ZString)
 	m_BufferLen = m_Length * 2
 End Constructor
 
-Private Constructor UString(ByRef Value As UString)
+Private Constructor UStringX(ByRef Value As UStringX)
 	m_Length = Value.m_Length
 	m_BytesCount = Value.m_BytesCount
 	m_Data = _Allocate(m_BytesCount)
@@ -93,14 +93,14 @@ Private Constructor UString(ByRef Value As UString)
 End Constructor
 
 
-Private Destructor UString
+Private Destructor UStringX
 	If m_Data <> 0 Then
 		_Deallocate(m_Data)
 		m_Data = 0
 	End If
 End Destructor
 
-Private Function UString.StartsWith(ByRef Value As WString) As Boolean
+Private Function UStringX.StartsWith(ByRef Value As WString) As Boolean
 	Dim As Integer vLen = Len(Value)
 	If m_Length < vLen Then Return False
 	For i As Integer = 0 To vLen - 1
@@ -109,7 +109,7 @@ Private Function UString.StartsWith(ByRef Value As WString) As Boolean
 	Return True
 End Function
 
-Private Function UString.EndsWith(ByRef Value As WString) As Boolean
+Private Function UStringX.EndsWith(ByRef Value As WString) As Boolean
 	Dim As Integer vLen = Len(Value)
 	If m_Length < vLen Then Return False
 	Dim j As Integer = m_Length - vLen
@@ -120,34 +120,34 @@ Private Function UString.EndsWith(ByRef Value As WString) As Boolean
 	Return True
 End Function
 
-Private Function UString.Contains(ByRef Value As WString) As Boolean
+Private Function UStringX.Contains(ByRef Value As WString) As Boolean
 	Return InStr(*m_Data, Value) > 0
 End Function
 
-Private Function UString.ToLower As UString
+Private Function UStringX.ToLower As UStringX
 	Return LCase(*m_Data)
 End Function
 
-Private Function UString.ToUpper As UString
+Private Function UStringX.ToUpper As UStringX
 	Return UCase(*m_Data)
 End Function
 
-Private Function UString.TrimAll As UString
+Private Function UStringX.TrimAll As UStringX
 	Return Trim(*m_Data, Any !"\t ")
 End Function
 
-Private Function UString.TrimEnd As UString
+Private Function UStringX.TrimEnd As UStringX
 	Return RTrim(*m_Data, Any !"\t ")
 End Function
 
-Private Function UString.TrimStart As UString
+Private Function UStringX.TrimStart As UStringX
 	Return LTrim(*m_Data, Any !"\t ")
 End Function
 
 'When expression Is empty, uses FreeBASIC's native Mid function,extracts a portion of the string,
 'In-place replacement: When expression is provided, replaces the specified SubString range With the New larger text
-'Example: Dim As UString testStr = "Hello World" : Dim As UString result = testStr.SubString(7, 5, "FreeBasic") (Expected: 'Hello FreeBasic')
-Private Function UString.SubString(ByVal start As Integer, ByVal n As Integer, ByRef expression As Const WString = "" ) As UString
+'Example: Dim As UStringX testStr = "Hello World" : Dim As UStringX result = testStr.SubString(7, 5, "FreeBasic") (Expected: 'Hello FreeBasic')
+Private Function UStringX.SubString(ByVal start As Integer, ByVal n As Integer, ByRef expression As Const WString = "" ) As UStringX
 	If expression = "" Then
 		Return Mid(*m_Data, start, n)
 	Else
@@ -208,7 +208,7 @@ End Function
 	'#define ZAdd(subject, txt) Scope : Dim As Long ls = Len(txt) : Dim As ZString Ptr ResultPtr : If subject <> 0 Then : ResultPtr = _Reallocate(subject, (ls + Len(*subject) + 1) * SizeOf(ZString) * GrowLength) : Else : ResultPtr = _CAllocate((ls + 1) * SizeOf(ZString) * GrowLength) : End If : If ResultPtr = 0 Then :  : Else : If subject <> 0 Then : *ResultPtr = *subject & txt : If subject <> ResultPtr Then : Deallocate(subject) : End If : Else : *ResultPtr = txt : End If : subject = ResultPtr : End If : End Scope
 	
 	#define WReAllocate(subject, lLen) If subject <> 0 Then: subject = _Reallocate(subject, (lLen + 1) * SizeOf(WString) * GrowLength): Else: subject = _Allocate((lLen + 1) * SizeOf(WString) * GrowLength): End If
-	#define WLet(subject, txt) Scope: Dim As UString txt1 = txt: WReAllocate(subject, Len(txt1)): *subject = txt1: End Scope
+	#define WLet(subject, txt) Scope: Dim As UStringX txt1 = txt: WReAllocate(subject, Len(txt1)): *subject = txt1: End Scope
 	#define WDeAllocate(subject) If subject <> 0 Then: _Deallocate(subject): End If: subject = 0
 	#define ZLet(subject, txt) Scope: Dim As String txt1 = txt: subject = _Reallocate(subject, (Len(txt) + 1) * SizeOf(ZString)): If subject Then: *subject = txt1: End If: End Scope
 	#define ZDeAllocate(subject) If subject <> 0 Then: _Deallocate(subject): End If: subject = 0
@@ -394,7 +394,7 @@ Private Sub WDeAllocateEx Overload(subject() As WString Ptr)
 	Next
 End Sub
 
-Private Sub UString.Resize(NewLength As Integer)
+Private Sub UStringX.Resize(NewLength As Integer)
 	m_BytesCount = (NewLength + 1) * SizeOf(WString) * GrowLength
 	If m_Length < NewLength Then
 		WReAllocate(m_Data, NewLength)
@@ -402,7 +402,7 @@ Private Sub UString.Resize(NewLength As Integer)
 	m_Length = NewLength
 End Sub
 
-Private Function UString.AppendBuffer(ByVal addrMemory As Any Ptr, ByVal NumBytes As ULong) As Boolean
+Private Function UStringX.AppendBuffer(ByVal addrMemory As Any Ptr, ByVal NumBytes As ULong) As Boolean
 	If m_Data = 0 OrElse addrMemory = 0 OrElse NumBytes < 1 Then Return False
 	
 	This.Resize(m_Length + NumBytes)
@@ -416,7 +416,7 @@ Private Function UString.AppendBuffer(ByVal addrMemory As Any Ptr, ByVal NumByte
 	Return True
 End Function
 
-Private Function UString.Add(ByRef txt As Const WString, AddBefore As Boolean = False) As Boolean
+Private Function UStringX.Add(ByRef txt As Const WString, AddBefore As Boolean = False) As Boolean
 	Dim As Integer oldLen, ls = Len(txt)
 	If m_Data = 0 OrElse ls = 0 Then Return False
 	oldLen = m_Length
@@ -459,13 +459,13 @@ Private Function UString.Add(ByRef txt As Const WString, AddBefore As Boolean = 
 	Return True
 End Function
 
-Private Operator UString.[](ByVal Index As Integer) ByRef As UShort
+Private Operator UStringX.[](ByVal Index As Integer) ByRef As UShort
 	Static Zero As UShort = 0
 	If Index < 0 Or Index > m_Length Then Return Zero
 	Operator = *Cast(UShort Ptr, m_Data + Index)
 End Operator
 
-Private Operator UString.Let(ByRef lhs As UString)
+Private Operator UStringX.Let(ByRef lhs As UStringX)
 	If @This <> @lhs Then
 		m_Length = lhs.m_Length
 		m_BytesCount = lhs.m_BytesCount
@@ -481,7 +481,7 @@ Private Operator UString.Let(ByRef lhs As UString)
 	End If
 End Operator
 
-Private Operator UString.Let(ByRef lhs As WString)
+Private Operator UStringX.Let(ByRef lhs As WString)
 	m_Length = Len(lhs)
 	m_BytesCount = (m_Length + 1) * SizeOf(WString) * GrowLength
 	m_BufferLen = m_Length * 2
@@ -495,7 +495,7 @@ Private Operator UString.Let(ByRef lhs As WString)
 	If OnChange Then OnChange(This)
 End Operator
 
-Private Operator UString.Let(ByRef lhs As Const WString)
+Private Operator UStringX.Let(ByRef lhs As Const WString)
 	m_Length = Len(lhs)
 	m_BytesCount = (m_Length + 1) * SizeOf(WString) * GrowLength
 	m_BufferLen = m_Length * 2
@@ -509,7 +509,7 @@ Private Operator UString.Let(ByRef lhs As Const WString)
 	If OnChange Then OnChange(This)
 End Operator
 
-Private Operator UString.Let(ByRef lhs As Const ZString)
+Private Operator UStringX.Let(ByRef lhs As Const ZString)
 	m_Length = Len(lhs)
 	m_BytesCount = (m_Length + 1) * SizeOf(WString) * GrowLength
 	m_BufferLen = m_Length * 2
@@ -525,7 +525,7 @@ Private Operator UString.Let(ByRef lhs As Const ZString)
 	If OnChange Then OnChange(This)
 End Operator
 '
-Private Operator UString.Let(ByRef lhs As String)
+Private Operator UStringX.Let(ByRef lhs As String)
 	m_Length = Len(lhs)
 	m_BytesCount = (m_Length + 1) * SizeOf(WString) * GrowLength
 	m_BufferLen = m_Length * 2
@@ -541,36 +541,36 @@ Private Operator UString.Let(ByRef lhs As String)
 	If OnChange Then OnChange(This)
 End Operator
 
-Private Property UString.Length() As Integer
+Private Property UStringX.Length() As Integer
 	Return m_Length
 End Property
 
-Private Operator UString.Cast() ByRef As WString
+Private Operator UStringX.Cast() ByRef As WString
 	Return *m_Data
 End Operator
 
-Private Operator UString.Cast() As Any Ptr
+Private Operator UStringX.Cast() As Any Ptr
 	Return CPtr(Any Ptr, m_Data)
 End Operator
 
-Private Function UString.vptr As WString Ptr
+Private Function UStringX.vptr As WString Ptr
 	Return m_Data
 End Function
 
-Private Function Val Overload(ByRef subject As UString) As Double
+Private Function Val Overload(ByRef subject As UStringX) As Double
 	Return Val(* (subject.m_Data))
 End Function
 
-Private Operator Len(ByRef lhs As UString) As Integer
+Private Operator Len(ByRef lhs As UStringX) As Integer
 	Return Len(*lhs.m_Data)
 End Operator
 
-Private Function WStrPtr(ByRef Value As UString) As WString Ptr
+Private Function WStrPtr(ByRef Value As UStringX) As WString Ptr
 	Return Value.m_Data
 End Function
 
-Private Operator & (ByRef lhs As UString, ByRef rhs As UString) As UString
-	Dim As UString Result
+Private Operator & (ByRef lhs As UStringX, ByRef rhs As UStringX) As UStringX
+	Dim As UStringX Result
 	Dim As Long Len_Lhs = Len(lhs)
 	Dim As Long Len_Rhs = Len(rhs)
 	Result.Resize(Len_Lhs + Len_Rhs)
@@ -584,16 +584,16 @@ Private Operator & (ByRef lhs As UString, ByRef rhs As UString) As UString
 End Operator
 
 ' ========================================================================================
-' & operator overloads for UString with WString types
+' & operator overloads for UStringX with WString types
 ' ========================================================================================
-Private Operator & (ByRef lhs As UString, ByRef rhs As Const WString) As UString
-	Dim As UString Result = lhs
+Private Operator & (ByRef lhs As UStringX, ByRef rhs As Const WString) As UStringX
+	Dim As UStringX Result = lhs
 	Result.Add(rhs)
 	Return Result
 End Operator
 
-Private Operator & (ByRef lhs As Const WString, ByRef rhs As UString) As UString
-	Dim As UString Result = lhs
+Private Operator & (ByRef lhs As Const WString, ByRef rhs As UStringX) As UStringX
+	Dim As UStringX Result = lhs
 	Result.Add(*rhs.m_Data)
 	Return Result
 End Operator
@@ -601,19 +601,19 @@ End Operator
 ' ========================================================================================
 ' &= operator (in-place append) — key performance operator
 ' ========================================================================================
-Private Operator UString.&= (ByRef rhs As UString)
+Private Operator UStringX.&= (ByRef rhs As UStringX)
 	If @This <> @rhs Then This.Add(*rhs.m_Data)
 End Operator
 
-Private Operator UString.&= (ByRef rhs As Const WString)
+Private Operator UStringX.&= (ByRef rhs As Const WString)
 	This.Add(rhs)
 End Operator
 
-Private Operator UString.&= (ByRef rhs As WString)
+Private Operator UStringX.&= (ByRef rhs As WString)
 	This.Add(rhs)
 End Operator
 
-Private Operator UString.&= (ByRef rhs As String)
+Private Operator UStringX.&= (ByRef rhs As String)
 	Dim As WString Ptr pw = _CAllocate((Len(rhs) + 1) * SizeOf(WString))
 	If pw Then
 		*pw = rhs
@@ -622,7 +622,7 @@ Private Operator UString.&= (ByRef rhs As String)
 	End If
 End Operator
 
-Private Operator UString.&= (ByRef rhs As Const ZString)
+Private Operator UStringX.&= (ByRef rhs As Const ZString)
 	Dim As WString Ptr pw = _CAllocate((Len(rhs) + 1) * SizeOf(WString))
 	If pw Then
 		*pw = rhs
@@ -634,19 +634,19 @@ End Operator
 ' ========================================================================================
 ' += operator (in-place append) — same as &=
 ' ========================================================================================
-Private Operator UString.+= (ByRef rhs As UString)
+Private Operator UStringX.+= (ByRef rhs As UStringX)
 	If @This <> @rhs Then This.Add(*rhs.m_Data)
 End Operator
 
-Private Operator UString.+= (ByRef rhs As Const WString)
+Private Operator UStringX.+= (ByRef rhs As Const WString)
 	This.Add(rhs)
 End Operator
 
-Private Operator UString.+= (ByRef rhs As WString)
+Private Operator UStringX.+= (ByRef rhs As WString)
 	This.Add(rhs)
 End Operator
 
-Private Operator UString.+= (ByRef rhs As String)
+Private Operator UStringX.+= (ByRef rhs As String)
 	Dim As WString Ptr pw = _CAllocate((Len(rhs) + 1) * SizeOf(WString))
 	If pw Then
 		*pw = rhs
@@ -655,7 +655,7 @@ Private Operator UString.+= (ByRef rhs As String)
 	End If
 End Operator
 
-Private Operator UString.+= (ByRef rhs As Const ZString)
+Private Operator UStringX.+= (ByRef rhs As Const ZString)
 	Dim As WString Ptr pw = _CAllocate((Len(rhs) + 1) * SizeOf(WString))
 	If pw Then
 		*pw = rhs
@@ -665,29 +665,29 @@ Private Operator UString.+= (ByRef rhs As Const ZString)
 End Operator
 
 ' ========================================================================================
-' + operator (concatenation returning new UString)
+' + operator (concatenation returning new UStringX)
 ' ========================================================================================
-Private Operator + (ByRef lhs As UString, ByRef rhs As UString) As UString
-	Dim As UString Result = lhs
+Private Operator + (ByRef lhs As UStringX, ByRef rhs As UStringX) As UStringX
+	Dim As UStringX Result = lhs
 	Result.Add(*rhs.m_Data)
 	Return Result
 End Operator
 
-Private Operator + (ByRef lhs As UString, ByRef rhs As Const WString) As UString
-	Dim As UString Result = lhs
+Private Operator + (ByRef lhs As UStringX, ByRef rhs As Const WString) As UStringX
+	Dim As UStringX Result = lhs
 	Result.Add(rhs)
 	Return Result
 End Operator
 
-Private Operator + (ByRef lhs As Const WString, ByRef rhs As UString) As UString
-	Dim As UString Result = lhs
+Private Operator + (ByRef lhs As Const WString, ByRef rhs As UStringX) As UStringX
+	Dim As UStringX Result = lhs
 	Result.Add(*rhs.m_Data)
 	Return Result
 End Operator
 
-Private Function Left Overload(ByRef subject As UString, ByVal n As Integer) As UString
+Private Function Left Overload(ByRef subject As UStringX, ByVal n As Integer) As UStringX
 	'Return Left(*(subject.vptr), n)
-	Dim As UString Result
+	Dim As UStringX Result
 	If n <= 0 Then Return Result
 	If n > subject.m_Length Then n = subject.m_Length
 	Result.Resize(n)
@@ -699,9 +699,9 @@ Private Function Left Overload(ByRef subject As UString, ByVal n As Integer) As 
 	Return Result
 End Function
 
-Private Function Right Overload(ByRef subject As UString, ByVal n As Integer) As UString
+Private Function Right Overload(ByRef subject As UStringX, ByVal n As Integer) As UStringX
 	'Return Right(*(subject.vptr), n)
-	Dim As UString Result
+	Dim As UStringX Result
 	If n <= 0 Then Return Result
 	If n > subject.m_Length Then n = subject.m_Length
 	Dim As Long Lens = subject.m_Length - n
@@ -755,7 +755,7 @@ End Function
 	'       Boolean value indicating the kind of comparison to use when evaluating substrings.
 	
 	'Returns a string, which is a substring of a string expression beginning at the start position (defaults to 1), in which a specified substring has been replaced with another substring a specified number of times.
-	Private Function Replace(ByRef Expression As WString, ByRef FindingText As WString, ByRef ReplacingText As WString, ByVal Start As Integer = 1, ByVal Count As Integer = -1, MatchCase As Boolean = True, ByRef CountReplaced As Integer = 0) As UString
+	Private Function Replace(ByRef Expression As WString, ByRef FindingText As WString, ByRef ReplacingText As WString, ByVal Start As Integer = 1, ByVal Count As Integer = -1, MatchCase As Boolean = True, ByRef CountReplaced As Integer = 0) As UStringX
 		If Len(FindingText) = 0 Then CountReplaced = 0: Return Expression
 		Dim As WString Ptr original, find
 		If MatchCase Then
@@ -795,7 +795,7 @@ End Function
 		Dim As Long found, n, staid, m, c
 		Var Lf = Len(FindingText) * GrowLength, Lr = Len(ReplacingText) * GrowLength, Lo = Len(Expression) * GrowLength
 		t = Len(Expression) * GrowLength - t * Lf + t * Lr               'length of output string
-		Dim As UString res
+		Dim As UStringX res
 		res.Resize t                                        'output string
 		Dim As WString Ptr wres = res.vptr
 		n = Start - 1
@@ -1078,15 +1078,15 @@ Private Function ZGet(ByRef subject As ZString Ptr) As String
 	Return *subject
 End Function
 
-Private Function StrLSet(ByRef MainStr As Const WString, ByVal StringLength As Long, ByRef PadCharacter As Const WString = " ") As UString
-	Dim strn As UString = WString(StringLength, PadCharacter)
+Private Function StrLSet(ByRef MainStr As Const WString, ByVal StringLength As Long, ByRef PadCharacter As Const WString = " ") As UStringX
+	Dim strn As UStringX = WString(StringLength, PadCharacter)
 	Mid(strn, 1, Len(MainStr)) = MainStr
 	Return strn
 End Function
 
-Private Function StrRSet(ByRef MainStr As Const WString, ByVal StringLength As Long, ByRef PadCharacter As Const WString = " ") As UString
+Private Function StrRSet(ByRef MainStr As Const WString, ByVal StringLength As Long, ByRef PadCharacter As Const WString = " ") As UStringX
 	If Len(MainStr) > StringLength Then Return Left(MainStr, StringLength)
-	Dim strn As UString = WString(StringLength, PadCharacter)
+	Dim strn As UStringX = WString(StringLength, PadCharacter)
 	Mid(strn, StringLength - Len(MainStr) + 1, Len(MainStr)) = MainStr
 	Return strn
 End Function
@@ -1359,7 +1359,7 @@ Private Function Split Overload(ByRef wszMainStr As String, ByRef Delimiter As C
 	Return i + 1
 End Function
 
-Private Function Split(ByRef wszMainStr As WString, ByRef Delimiter As Const WString, Result() As UString, MatchCase As Boolean = True, skipEmptyElement As Boolean = False) As Long
+Private Function Split(ByRef wszMainStr As WString, ByRef Delimiter As Const WString, Result() As UStringX, MatchCase As Boolean = True, skipEmptyElement As Boolean = False) As Long
 	''The following code from FXM, (https://www.freebasic.net/forum/viewtopic.php?p=305672&hilit=Split#p305672)
 	Dim As Integer L1 = Len(wszMainStr)
 	Dim As Integer L2 = Len(Delimiter)
@@ -1652,8 +1652,8 @@ Function Join Overload(Subject() As String, ByRef Delimiter As Const String, ByV
 	'Return Result
 End Function
 
-Function Join(Subject() As UString, ByRef Delimiter As Const WString, ByVal skipEmptyElement As Boolean = False, iStart As Integer = 0, iStep As Integer = 1) As UString
-	'Dim As UString Result
+Function Join(Subject() As UStringX, ByRef Delimiter As Const WString, ByVal skipEmptyElement As Boolean = False, iStart As Integer = 0, iStep As Integer = 1) As UStringX
+	'Dim As UStringX Result
 	'For i As Integer = iStart To UBound(Subject) Step iStep
 	'	'Result &= IIf(i = iStart, "", Delimiter) & Subject(i)
 	'Next
@@ -1668,7 +1668,7 @@ Function Join(Subject() As UString, ByRef Delimiter As Const WString, ByVal skip
 		If skipEmptyElement = False OrElse Len(*SubjectPtr(i)) <> 0 Then size += Len(*SubjectPtr(i)) + ls
 	Next i
 	If skipEmptyElement = False OrElse Len(*SubjectPtr(uj)) <> 0 Then size += Len(*SubjectPtr(uj))
-	Dim As UString Result
+	Dim As UStringX Result
 	Result.Resize size
 	Dim As WString Ptr ResultPtr = Result.vptr
 	
@@ -1776,9 +1776,9 @@ End Function
 '            StringPathName("C:\VisualFBEditor\Poject.Bas","NAMEEX")  ->Poject.Bas
 '            StringPathName("C:\VisualFBEditor\Poject.Bas","EXTN")     -> .Bas
 ' ========================================================================================
-Private Function StringPathName(ByRef wszFileSpec As WString, ByRef wszOption As Const WString = "PATH") As UString
+Private Function StringPathName(ByRef wszFileSpec As WString, ByRef wszOption As Const WString = "PATH") As UStringX
 	If Len(wszFileSpec) = 0 Then Return ""
-	Dim As UString Result
+	Dim As UStringX Result
 	Select Case UCase(wszOption)
 	Case "PATH"
 		' // Returns the path portion of file spec
@@ -1812,7 +1812,7 @@ Private Function StringPathName(ByRef wszFileSpec As WString, ByRef wszOption As
 	Return Result
 End Function
 
-Private Function StringExtract Overload(ByRef wszMainStr As WString, ByRef wszMatchStr As Const WString, ByVal nStart As Long = 1, ByVal MatchCase As Boolean = True) As UString
+Private Function StringExtract Overload(ByRef wszMainStr As WString, ByRef wszMatchStr As Const WString, ByVal nStart As Long = 1, ByVal MatchCase As Boolean = True) As UStringX
 	Dim As Long nLen = Len(wszMainStr), nPos =0
 	If (nStart = 0) OrElse (nStart > nLen) OrElse nLen =0 Then Return wszMainStr
 	If nStart < 0 Then nStart = nLen + nStart + 1
@@ -1836,7 +1836,7 @@ Private Function StringExtract Overload(ByRef wszMainStr As WString, ByRef wszMa
 	Return Mid(wszMainStr, nStart)
 End Function
 
-Private Function StringExtract(ByRef wszMainStr As WString, ByRef wszDelim1 As Const WString, ByRef wszDelim2 As Const WString, ByVal nStart As Long = 1, ByVal MatchCase As Boolean = True) As UString
+Private Function StringExtract(ByRef wszMainStr As WString, ByRef wszDelim1 As Const WString, ByRef wszDelim2 As Const WString, ByVal nStart As Long = 1, ByVal MatchCase As Boolean = True) As UStringX
 	Dim As Long nLen = Len(wszMainStr), nPos1, nPos2
 	If (nStart = 0) OrElse (nStart > nLen) Then Return wszMainStr
 	If nStart < 0 Then nStart = nLen + nStart + 1
@@ -1883,8 +1883,8 @@ Private Function StringSubStringAll(ByRef wszMainStr As WString, ByRef ParseStar
 	Return n
 End Function
 
-Private Function SubString(ByRef wszMainStr As WString, ByVal start As Integer, ByVal n As Integer, ByRef expression As Const WString = "" ) As UString
-	Dim As UString Result
+Private Function SubString(ByRef wszMainStr As WString, ByVal start As Integer, ByVal n As Integer, ByRef expression As Const WString = "" ) As UStringX
+	Dim As UStringX Result
 	If expression = "" Then
 		Return Mid(wszMainStr, start, n)
 	Else
@@ -1925,7 +1925,7 @@ Private Function SubString(ByRef wszMainStr As WString, ByVal start As Integer, 
 	End If
 End Function
 
-Private Function FormatFileName(ByRef originalName As WString) As UString
+Private Function FormatFileName(ByRef originalName As WString) As UStringX
 	Dim As WString Ptr ResultPtr
 	Dim As Integer ch
 	For i As Integer = 0 To Len(originalName) - 1
@@ -2036,7 +2036,7 @@ End Function
 #endif
 
 #ifndef Choose_Off
-	Private Function Choose cdecl(Index As Integer, ...) As UString
+	Private Function Choose cdecl(Index As Integer, ...) As UStringX
 		Dim args As Cva_List
 		Cva_Start(args, Index)
 		For i As Integer = 1 To Index - 1
@@ -2049,7 +2049,7 @@ End Function
 #endif
 
 #ifndef Switch_Off
-	Private Function Switch cdecl(Condition As Boolean, ...) As UString
+	Private Function Switch cdecl(Condition As Boolean, ...) As UStringX
 		Dim args As Cva_List
 		Cva_Start(args, Condition)
 		Dim As Boolean bCondition = Condition
@@ -2063,7 +2063,7 @@ End Function
 #endif
 
 #if (Not defined(__USE_JNI__)) AndAlso (Not defined(__USE_WASM__))
-	Private Function FileExists (ByRef FileName As UString) As Boolean
+	Private Function FileExists (ByRef FileName As UStringX) As Boolean
 		#ifdef __USE_GTK__
 			If *FileName.vptr <> "" AndAlso g_file_test(ToUtf8(*FileName.vptr), G_FILE_TEST_EXISTS) Then
 				Return True

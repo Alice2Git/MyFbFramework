@@ -143,8 +143,8 @@ Namespace My.Sys.Forms
 			Declare Sub SendToAllChildItems(ByVal hNode As HTREEITEM, tvMessage As Long)
 			Declare Sub CreateNodes(PNode As TreeNode Ptr)
 		#elseif defined(__USE_WASM__)
-			Declare Virtual Function GetContent() As UString
-			Declare Function CreateNodes(PNodes As TreeNode Ptr) As UString
+			Declare Virtual Function GetContent() As UStringX
+			Declare Function CreateNodes(PNodes As TreeNode Ptr) As UStringX
 		#endif
 		Declare Virtual Sub ProcessMessage(ByRef Message As Message)
 	Public:

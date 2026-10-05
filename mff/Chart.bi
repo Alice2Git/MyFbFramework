@@ -102,9 +102,9 @@ Namespace My.Sys.Forms
 	Private Type Chart Extends Control
 	Private:
 		Type tItem
-			ItemName As UString
+			ItemName As UStringX
 			Value As Single
-			text As UString
+			text As UStringX
 			TextWidth As Long
 			TextHeight As Long
 			'Default color for data elements.
@@ -116,7 +116,7 @@ Namespace My.Sys.Forms
 		End Type
 		
 		Type tSerie
-			SerieName As UString
+			SerieName As UStringX
 			TextWidth As Long
 			TextHeight As Long
 			SerieColor As Long
@@ -139,7 +139,7 @@ Namespace My.Sys.Forms
 		
 		Dim nScale As Single
 		
-		Dim m_Title As UString
+		Dim m_Title As UStringX
 		Dim m_TitleFont As My.Sys.Drawing.Font
 		Dim m_TitleForeColor As ULong
 		Dim m_BackColorOpacity As Long
@@ -164,9 +164,9 @@ Namespace My.Sys.Forms
 		Dim m_LabelsVisible As Boolean
 		Dim m_LabelsPositions As LabelsPositions
 		Dim m_LabelsAlignments As LabelsAlignments
-		Dim m_LabelsFormat As UString
-		Dim m_LabelsFormats As UString
-		Dim m_ToolTipsFormat As UString
+		Dim m_LabelsFormat As UStringX
+		Dim m_LabelsFormats As UStringX
+		Dim m_ToolTipsFormat As UStringX
 		Dim m_BorderColor As ULong
 		Dim m_BorderRound As Long
 		Dim m_Rotation  As Long
@@ -245,7 +245,7 @@ Namespace My.Sys.Forms
 		Declare Sub MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 		Declare Function PtInRectL(Rect As RectL, ByVal X As Long, ByVal Y As Long) As Boolean
 		Declare Function PtInPath(hPath As Any Ptr, X As Single, Y As Single) As Boolean
-		Declare Function FormatLabel(ByVal numerical_expression As Double, ByRef formatting_expression As WString = "") As UString
+		Declare Function FormatLabel(ByVal numerical_expression As Double, ByRef formatting_expression As WString = "") As UStringX
 		Declare Sub Show()
 		Declare Sub Paint()
 		#ifndef __USE_GTK__

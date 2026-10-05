@@ -422,7 +422,7 @@ Namespace My.Sys.Forms
 		#endif
 	End Property
 	
-	Private Property TextBox.Text_ ByRef As UString
+	Private Property TextBox.Text_ ByRef As UStringX
 		#ifdef __USE_GTK__
 			If GTK_IS_WIDGET(widget) Then
 				If GTK_IS_TEXT_VIEW(widget) Then
@@ -481,7 +481,7 @@ Namespace My.Sys.Forms
 		#endif
 	End Property
 	
-	Private Sub TextBox.OnTextChanged(ByRef Sender As UString)
+	Private Sub TextBox.OnTextChanged(ByRef Sender As UStringX)
 		Dim As Control Ptr Owner = Cast(Control Ptr, Sender.m_Owner)
 		Owner->Text = Sender
 		#ifdef __USE_GTK__
@@ -518,7 +518,7 @@ Namespace My.Sys.Forms
 		#endif
 	End Sub
 	
-	Private Property TextBox.Text_(ByRef Value As UString)
+	Private Property TextBox.Text_(ByRef Value As UStringX)
 		FText_ = Value
 	End Property
 	

@@ -2,13 +2,13 @@
 '' Regex.bas
 '' Regular expressions support for MyFbFramework
 ''
-'' Unicode-only (WString / UString). Three pluggable backends, selected at
+'' Unicode-only (WString / UStringX). Three pluggable backends, selected at
 '' compile time -- see Regex.bi for the selection rules and link flags.
 ''
 '' All of Match / Matches / Replace / ReplaceFirst / Split / IsMatch are
 '' implemented once, in terms of Regex.EngineFindNext(), which is the only
 '' function each backend has to provide. EngineFindNext always works in
-'' *character* offsets into the caller's WString/UString -- backends that
+'' *character* offsets into the caller's WString/UStringX -- backends that
 '' internally operate on UTF-8 (PCRE2, GRegex) convert byte offsets back to
 '' char offsets via the framework's ToUtf8()/FromUtf8() helpers so callers
 '' never see a UTF-8 byte offset.
@@ -51,7 +51,7 @@ Namespace My.Sys.Text
 	'' characters of Text encode to?
 	Private Function CharIndexToUtf8ByteOffset(ByRef Text As Const WString, ByVal CharIndex As Integer) As Integer
 		If CharIndex <= 0 Then Return 0
-		Dim As UString prefix = Left(Text, CharIndex)
+		Dim As UStringX prefix = Left(Text, CharIndex)
 		Return Len(ToUtf8(prefix))
 	End Function
 
@@ -271,7 +271,7 @@ Namespace My.Sys.Text
 			Return
 		End If
 
-		'' _Pattern is a UString; its m_Data field is the underlying WString Ptr buffer.
+		'' _Pattern is a UStringX; its m_Data field is the underlying WString Ptr buffer.
 		Dim As BSTR bstrPattern = SysAllocString(_Pattern.m_Data)
 		re->put_Pattern(bstrPattern)
 		SysFreeString(bstrPattern)
@@ -297,7 +297,7 @@ Namespace My.Sys.Text
 		'' IRegExp2.Execute always scans from the start of the string it is
 		'' given, so we feed it the remaining tail and shift offsets back by
 		'' StartAt afterwards.
-		Dim As UString remainder = Mid(Text, StartAt + 1)
+		Dim As UStringX remainder = Mid(Text, StartAt + 1)
 		Dim As BSTR bstrSrc = SysAllocString(remainder.m_Data)
 
 		'' The Matches/Match/SubMatches objects VBScript.RegExp hands back
@@ -496,15 +496,15 @@ Namespace My.Sys.Text
 	'' written once, on top of Regex.EngineFindNext(), regardless of
 	'' which backend was selected above.
 	''
-	'' NOTE ON STRING MIXING: WString and UString are different types with
+	'' NOTE ON STRING MIXING: WString and UStringX are different types with
 	'' no automatic implicit conversion between them in every context (in
-	'' particular, `Return someWString` from a UString-returning Function,
+	'' particular, `Return someWString` from a UStringX-returning Function,
 	'' and `uStringVar &= someWString`, do not reliably resolve on all fbc
 	'' versions). So every place below that needs to combine a raw WString
-	'' parameter (Text/Replacement) with a UString first copies it into a
-	'' local `Dim As UString`, which *does* work (it goes through UString's
+	'' parameter (Text/Replacement) with a UStringX first copies it into a
+	'' local `Dim As UStringX`, which *does* work (it goes through UStringX's
 	'' Let-from-WString assignment), and only ever concatenates/returns
-	'' UString-to-UString after that.
+	'' UStringX-to-UStringX after that.
 	'' -------------------------------------------------------------
 
 	Constructor Regex()
@@ -528,7 +528,7 @@ Namespace My.Sys.Text
 		Compile()
 	End Sub
 
-	Property Regex.Pattern() As UString
+	Property Regex.Pattern() As UStringX
 		Return _Pattern
 	End Property
 
@@ -540,7 +540,7 @@ Namespace My.Sys.Text
 		Return _Valid
 	End Function
 
-	Function Regex.LastError() As UString
+	Function Regex.LastError() As UStringX
 		Return _LastError
 	End Function
 
@@ -594,41 +594,41 @@ Namespace My.Sys.Text
 		Return UBound(_LastMatches) + 1
 	End Function
 
-	Function Regex.ReplaceFirst(ByRef Text As Const WString, ByRef Replacement As Const WString) As UString
-		Dim As UString textU = Text
+	Function Regex.ReplaceFirst(ByRef Text As Const WString, ByRef Replacement As Const WString) As UStringX
+		Dim As UStringX textU = Text
 		If _Valid = False Then Return textU
 
 		Dim m As RegexMatch
 		If EngineFindNext(Text, 0, m) = False Then Return textU
 
-		Dim As UString resultU = Left(Text, m.Index) & Replacement & Mid(Text, m.Index + m.Length + 1)
+		Dim As UStringX resultU = Left(Text, m.Index) & Replacement & Mid(Text, m.Index + m.Length + 1)
 		Return resultU
 	End Function
 
-	Function Regex.Replace(ByRef Text As Const WString, ByRef Replacement As Const WString) As UString
-		Dim As UString textU = Text
+	Function Regex.Replace(ByRef Text As Const WString, ByRef Replacement As Const WString) As UStringX
+		Dim As UStringX textU = Text
 		If _Valid = False Then Return textU
 
-		Dim As UString replacementU = Replacement
-		Dim As UString result = ""
+		Dim As UStringX replacementU = Replacement
+		Dim As UStringX result = ""
 		Dim As Integer pos = 0
 		Dim As Integer textLen = Len(Text)
 
 		Do While pos <= textLen
 			Dim m As RegexMatch
 			If EngineFindNext(Text, pos, m) = False Then
-				Dim As UString tail = Mid(Text, pos + 1)
+				Dim As UStringX tail = Mid(Text, pos + 1)
 				result &= tail
 				Exit Do
 			End If
 
-			Dim As UString beforeMatch = Mid(Text, pos + 1, m.Index - pos)
+			Dim As UStringX beforeMatch = Mid(Text, pos + 1, m.Index - pos)
 			result &= beforeMatch
 			result &= replacementU
 
 			If m.Length <= 0 Then
 				If m.Index < textLen Then
-					Dim As UString oneChar = Mid(Text, m.Index + 1, 1)
+					Dim As UStringX oneChar = Mid(Text, m.Index + 1, 1)
 					result &= oneChar
 				End If
 				pos = m.Index + 1
@@ -640,7 +640,7 @@ Namespace My.Sys.Text
 		Return result
 	End Function
 
-	Function Regex.Split(ByRef Text As Const WString) As UString Ptr
+	Function Regex.Split(ByRef Text As Const WString) As UStringX Ptr
 		Erase _LastSplit
 
 		If _Valid = False Then

@@ -45,7 +45,7 @@ Namespace My.Sys.Forms
 		#else
 			Declare Static Sub HandleIsAllocated(ByRef Sender As Control)
 		#endif
-		Declare Static Sub OnTextChanged(ByRef Sender As UString)
+		Declare Static Sub OnTextChanged(ByRef Sender As UStringX)
 		FTopLine          As Integer
 		FSelStart         As Integer
 		FSelLength        As Integer
@@ -76,7 +76,7 @@ Namespace My.Sys.Forms
 		FWantTab As Boolean
 		FMultiline As Boolean
 		FScrollBars As ScrollBarsType
-		FText_ As UString
+		FText_ As UStringX
 		FWordWraps As Boolean
 		FInputFilter As WString Ptr 'David Change
 		#ifdef __USE_GTK__
@@ -197,9 +197,9 @@ Namespace My.Sys.Forms
 		Declare Property Text ByRef As WString
 		'Gets or sets the text contents.
 		Declare Property Text(ByRef Value As WString)
-		Declare Property Text_ ByRef As UString
+		Declare Property Text_ ByRef As UStringX
 		'Gets or sets the text contents.
-		Declare Property Text_(ByRef Value As UString)
+		Declare Property Text_(ByRef Value As UStringX)
 		Declare Property TopLine As Integer
 		'Gets/sets the index of the topmost visible line.
 		Declare Property TopLine(Value As Integer)

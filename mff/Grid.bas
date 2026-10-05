@@ -959,7 +959,7 @@ Namespace My.Sys.Forms
 			#elseif defined(__USE_WINAPI__)
 				If Parent->Handle> 0 AndAlso IsLastItem Then SendMessage(Parent->Handle, LVM_SETITEMCOUNT, FItems.Count, LVSICF_NOINVALIDATEALL)
 			#elseif defined(__USE_WASM__)
-				Dim As UString strRow = ""
+				Dim As UStringX strRow = ""
 				For i As Integer = 0 To Cast(Grid Ptr, Parent)->Columns.Count - 1
 					strRow &= "<td>" & ToUtf8(PItem->Text(i)) & !"</td>\r"
 				Next
@@ -2257,7 +2257,7 @@ Namespace My.Sys.Forms
 				'                If Perform(TB_GETBUTTON,Index,CInt(@TB)) Then
 				'                   If Buttons.Button(Index)->ShowHint Then
 				'                      If Buttons.Button(Index)->Hint <> "" Then
-				'                          'Dim As UString s
+				'                          'Dim As UStringX s
 				'                          's = Buttons.Button(Index).Hint
 				'                          TTX->lpszText = @(Buttons.Button(Index)->Hint)
 				'                      End If
@@ -2270,7 +2270,7 @@ Namespace My.Sys.Forms
 	End Sub
 	
 	#ifdef __USE_WASM__
-		Private Function Grid.GetContent() As UString
+		Private Function Grid.GetContent() As UStringX
 			Return "<thead><tr></tr></thead><tbody></tbody>"
 		End Function
 	#endif
@@ -2320,7 +2320,7 @@ Namespace My.Sys.Forms
 					Var TempHandle = .FHandle
 					For i As Integer = 0 To .Rows.Count - 1
 						#ifdef __USE_WASM__
-							Dim As UString strRow = ""
+							Dim As UStringX strRow = ""
 						#endif
 						For j As Integer = 0 To .Columns.Count - 1
 							.FHandle = 0

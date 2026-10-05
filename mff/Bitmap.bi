@@ -64,7 +64,7 @@ Namespace My.Sys.Drawing
 			Handle       As HBITMAP
 			pImage As GpImage Ptr
 		#elseif defined(__USE_WASM__)
-			Handle       As UString
+			Handle       As UStringX
 		#else
 			Handle       As Any Ptr
 		#endif

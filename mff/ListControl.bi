@@ -64,7 +64,7 @@ Namespace My.Sys.Forms
 			ListStore As GtkListStore Ptr
 			TreeSelection As GtkTreeSelection Ptr
 		#elseif defined(__USE_WASM__)
-			Declare Virtual Function GetContent() As UString
+			Declare Virtual Function GetContent() As UStringX
 		#endif
 		Declare Virtual Sub ProcessMessage(ByRef Message As Message)
 	Public:

@@ -26,7 +26,7 @@ Namespace My.Sys.Forms
 		#endif
 	Protected:
 		#ifdef __USE_WASM__
-			Declare Virtual Function GetContent() As UString
+			Declare Virtual Function GetContent() As UStringX
 		#endif
 		Declare Virtual Sub ProcessMessage(ByRef Message As Message)
 	Public:

@@ -128,7 +128,7 @@ Namespace My.Sys.Forms
 			Declare Property ParentWidget As GtkWidget Ptr
 			Declare Property ParentWidget(Value As GtkWidget Ptr)
 		#elseif defined(__USE_WASM__)
-			Declare Virtual Function GetContent() As UString
+			Declare Virtual Function GetContent() As UStringX
 		#endif
 	Public:
 		Declare Virtual Sub ProcessMessage(ByRef Message As Message)

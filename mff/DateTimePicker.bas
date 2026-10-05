@@ -479,7 +479,7 @@ Namespace My.Sys.Forms
 			Else
 				CharIndex = Start
 			End If
-			Dim As UString res(Any), FormatNew, s, p, f
+			Dim As UStringX res(Any), FormatNew, s, p, f
 			Dim As Boolean ToEnd, ToNext
 			Split(*FFormat, """", res())
 			For i As Integer = 0 To UBound(res)
@@ -813,7 +813,7 @@ Namespace My.Sys.Forms
 							If Len(PressedNumber) = 2 AndAlso Val(PressedNumber) > 59 Then PressedNumber = *e->key.string
 						End Select
 						If Not (StartsWith(LCase(FDateTimePart), "mmm") OrElse StartsWith(LCase(FDateTimePart), "ddd")) Then
-							Dim As UString txt = Text
+							Dim As UStringX txt = Text
 							Dim As String sp = " "
 							#ifdef __USE_GTK4__
 								gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(widget)), ToUtf8(..Left(txt, SelStart) & String(SelEnd - SelStart - Len(PressedNumber), sp) & Right(PressedNumber, SelEnd - SelStart) & Mid(txt, SelEnd + 1)), -1)

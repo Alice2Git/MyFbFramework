@@ -141,42 +141,42 @@ Sub Form1Type.TestUStringSubString()
    Dim As WString * 512 MsgWstr =  "=== Test UString.SubString方法 ===" 
    Debug.Print MsgWstr : txtResult.Text = txtResult.Text + Chr(13, 10) + MsgWstr
    
-   Dim As UString  testStr = "Hello World" 
+   Dim As UStringX  testStr = "Hello World" 
    ' Test 1: Normal substring  正常子串 
-   Dim As UString result1 = testStr.SubString(7, 5)
+   Dim As UStringX result1 = testStr.SubString(7, 5)
    MsgWstr = "Test 1 - Normal substring  正常子串: '" & result1 & "' (Expected: 'World')" & IIf(result1 = "World", "    OK", "    NOT OK")
    Debug.Print MsgWstr : txtResult.Text = txtResult.Text + Chr(13, 10) + MsgWstr
    testStr = "Hello World" 
    ' Test 2: With replacement 带替换 
-   Dim As UString result2 = testStr.SubString(7, 5, "FreeBasic" )
+   Dim As UStringX result2 = testStr.SubString(7, 5, "FreeBasic" )
    MsgWstr = "Test 2 - With replacement 带替换: '" & result2 & "' (Expected: 'Hello FreeBasic')" & IIf(result2 = "Hello FreeBasic", "    OK", "    NOT OK")
    Debug.Print MsgWstr : txtResult.Text = txtResult.Text + Chr(13, 10) + MsgWstr
    testStr = "Hello World" 
    ' Test 3: Negative length 负长度（向左扩展） 
-   Dim As UString result3 = testStr.SubString(7, -2, "9" )
+   Dim As UStringX result3 = testStr.SubString(7, -2, "9" )
    MsgWstr = "Test 3 - Negative length 负长度: '" & result3 & "' (Expected: 'Hello9orld'')" & IIf(result3 = "Hello9orld", "    OK", "    NOT OK")
    Debug.Print MsgWstr : txtResult.Text = txtResult.Text + Chr(13, 10) + MsgWstr
    testStr = "Hello World" 
    ' Test 4: Out of bounds 超出边界 
-   Dim As UString result4 = testStr.SubString(7, 10, "123")
+   Dim As UStringX result4 = testStr.SubString(7, 10, "123")
    MsgWstr = "Test 4 - Out of bounds 超出边界: '" & result4 & "' (Expected: 'Hello 123')" & IIf(result4 = "Hello 123", "    OK", "    NOT OK")
    Debug.Print MsgWstr : txtResult.Text = txtResult.Text + Chr(13, 10) + MsgWstr
    testStr = "Hello World" 
    ' Test 5: Empty string 空字符串 
-   Dim As UString testStr1
-   Dim As UString result5 = testStr1.SubString(1, 3, "Default" )
+   Dim As UStringX testStr1
+   Dim As UStringX result5 = testStr1.SubString(1, 3, "Default" )
    MsgWstr =  "Test 5 - Empty string 空字符串: '" & result5 & "' (Expected: 'Default')" & IIf(result5 = "Default", "    OK", "    NOT OK")
    Debug.Print MsgWstr : txtResult.Text = txtResult.Text + Chr(13, 10) + MsgWstr
    testStr = "Hello World" 
   
    ' Test 6: Start beyond length 超出起始
-   Dim As UString result6 = testStr.SubString(20, 3, "Append" )
+   Dim As UStringX result6 = testStr.SubString(20, 3, "Append" )
    MsgWstr = "Test 6 - Start beyond length 超出起始: '" & result6 & "' (Expected: 'Hello WorldAppend')" & IIf(result6 = "Hello WorldAppend", "    OK", "    NOT OK")
    Debug.Print MsgWstr : txtResult.Text = txtResult.Text + Chr(13, 10) + MsgWstr
    
    testStr = "Hello World"
    ' Test 7: Replacement longer than replaced 大于被替换长度
-   Dim As UString result7 = testStr.SubString(7, 1, "Good" )
+   Dim As UStringX result7 = testStr.SubString(7, 1, "Good" )
    MsgWstr = "Test 7 - Replacement longer than replaced 大于被替换长度: '" & result7 & "' (Expected: 'Hello Goodorld')" & IIf(result7 = "Hello Goodorld", "    OK", "    NOT OK")
    Debug.Print MsgWstr : txtResult.Text = txtResult.Text + Chr(13, 10) + MsgWstr
    
@@ -212,7 +212,7 @@ Dim As WString * 1024 MsgWstr = "===Run Comprehensive Tests 综合测试报告 =
    
    startTime = Timer
    For i As Integer = 1 To 10000
-       Dim As UString perfTest = "Performance testing string" 
+       Dim As UStringX perfTest = "Performance testing string" 
        perfTest.SubString(12, 8, "benchmark" )
    Next
    endTime = Timer

@@ -306,7 +306,7 @@ Namespace My.Sys.Forms
 		#endif
 	Protected:
 		#ifdef __USE_WASM__
-			Declare Virtual Function GetContent() As UString
+			Declare Virtual Function GetContent() As UStringX
 		#endif
 	Public:
 		'Removes all rows and columns.

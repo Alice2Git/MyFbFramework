@@ -344,7 +344,7 @@ Private Function IniFile.ReadBool(ByRef Section As WString, ByRef Key As WString
 	End If
 End Function
 
-Private Function IniFile.ReadString(ByRef Section As WString, ByRef Key As WString, ByRef Inplace As WString = "") As UString
+Private Function IniFile.ReadString(ByRef Section As WString, ByRef Key As WString, ByRef Inplace As WString = "") As UStringX
 	Dim As Integer Index
 	If SectionExists(Section) <> -1 Then
 		Index = KeyExists(Section, Key)

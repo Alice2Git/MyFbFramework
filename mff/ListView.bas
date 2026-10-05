@@ -1706,7 +1706,7 @@ Namespace My.Sys.Forms
 				'                If Perform(TB_GETBUTTON,Index,CInt(@TB)) Then
 				'                   If Buttons.Button(Index)->ShowHint Then
 				'                      If Buttons.Button(Index)->Hint <> "" Then
-				'                          'Dim As UString s
+				'                          'Dim As UStringX s
 				'                          's = Buttons.Button(Index).Hint
 				'                          TTX->lpszText = @(Buttons.Button(Index)->Hint)
 				'                      End If

@@ -746,7 +746,7 @@ Namespace My.Sys.Forms
 			.ImageIndex     = FImageIndex
 			Var MinColumnsCount = 0
 			If InStr(FCaption, Chr(9)) > 0 Then
-				Dim As UString Captions(Any)
+				Dim As UStringX Captions(Any)
 				Split(FCaption, Chr(9), Captions())
 				MinColumnsCount = Min(UBound(Captions), Cast(TreeListView Ptr, Parent)->Columns.Count - 1)
 				For j As Integer = 0 To MinColumnsCount
@@ -1911,7 +1911,7 @@ Namespace My.Sys.Forms
 				'                If Perform(TB_GETBUTTON,Index,CInt(@TB)) Then
 				'                   If Buttons.Button(Index)->ShowHint Then
 				'                      If Buttons.Button(Index)->Hint <> "" Then
-				'                          'Dim As UString s
+				'                          'Dim As UStringX s
 				'                          's = Buttons.Button(Index).Hint
 				'                          TTX->lpszText = @(Buttons.Button(Index)->Hint)
 				'                      End If

@@ -171,7 +171,7 @@ Namespace My.Sys.Forms
 			End If
 		End Property
 	#elseif defined(__USE_WASM__)
-		Private Function Form.GetContent() As UString
+		Private Function Form.GetContent() As UStringX
 			If FFormStyle = fsMDIForm Then
 				Return "<div id=""" & Trim(Str(@This)) & "Client""></div>"
 			ElseIf Not FMainForm Then

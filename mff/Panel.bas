@@ -116,7 +116,7 @@ Namespace My.Sys.Forms
 	#endif
 	
 	#ifdef __USE_WASM__
-		Private Function Panel.GetContent() As UString
+		Private Function Panel.GetContent() As UStringX
 			Return ""
 		End Function
 	#endif

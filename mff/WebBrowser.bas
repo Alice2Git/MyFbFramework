@@ -119,8 +119,8 @@ Namespace My.Sys.Forms
 		#endif
 	End Sub
 	
-	Private Function WebBrowser.GetURL() As UString
-		Dim As UString sRet
+	Private Function WebBrowser.GetURL() As UStringX
+		Dim As UStringX sRet
 		Dim As WString Ptr buf = sRet.vptr
 		#ifdef __USE_GTK__
 			sRet = *webkit_web_view_get_uri(widget)
@@ -181,7 +181,7 @@ Namespace My.Sys.Forms
 		#endif
 	End Sub
 	
-	Private Function WebBrowser.GetBody(ByVal flag As Long = 0) As UString
+	Private Function WebBrowser.GetBody(ByVal flag As Long = 0) As UStringX
 		#ifdef __USE_GTK__
 			#ifndef __USE_GTK3__
 				Dim As String Ptr bBuf = webkit_web_resource_get_data(webkit_web_view_get_main_resource(widget))

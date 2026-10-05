@@ -108,7 +108,7 @@ Namespace My.Sys.ComponentModel
 	Type PaperSize Extends Object
 		Height As Integer
 		Kind As PrinterPaperSize
-		PaperName As UString
+		PaperName As UStringX
 		RawKind As Integer
 		Width As Integer
 	End Type
